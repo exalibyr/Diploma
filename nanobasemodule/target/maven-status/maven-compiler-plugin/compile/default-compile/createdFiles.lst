@@ -1,0 +1,15 @@
+userInterface\ValidationWindow$1.class
+userInterface\GUIBuilder.class
+userInterface\ResultTableColumnModel.class
+userInterface\ValidationWindowLayout.class
+userInterface\ResultTableRenderer.class
+logic\DatasetBuilder.class
+userInterface\VerticalLayout.class
+userInterface\GUI.class
+userInterface\ResultTableModel.class
+userInterface\ValidationWindow.class
+logic\DataManager.class
+userInterface\GUI$2.class
+userInterface\ValidationWindow$2.class
+userInterface\GUI$1.class
+logic\Main.class
