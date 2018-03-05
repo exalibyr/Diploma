@@ -36,6 +36,7 @@ public class DataManager {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
             if(resultSet.first()){
                 if(enteredLogin.equals(resultSet.getString("login"))){
+                    enteredLogin = "";
                     StringBuilder enteredPasswordString = new StringBuilder();
                     for (int i = 0; i < enteredPassword.length; i++) {
                         enteredPasswordString.append(enteredPassword[i]);

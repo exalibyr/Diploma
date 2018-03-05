@@ -12,9 +12,14 @@ import java.awt.event.KeyListener;
 
 public class ValidationWindow extends JDialog {
 
+    private static final int PADDING = 10;
+
     private DataManager dataManager = new DataManager();
+    private JTextField loginTextField = new JTextField(12);
+    private JPasswordField passwordField = new JPasswordField(12);
 
     public ValidationWindow(){
+
         setTitle("Авторизация в базе данных");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModal(true);
@@ -24,51 +29,73 @@ public class ValidationWindow extends JDialog {
         dataManager.registerMySQLDriver();
 
         Container container = getContentPane();
-        JTextField loginTextField = new JTextField(12);
-        JPasswordField passwordField = new JPasswordField(12);
         JLabel loginLabel = new JLabel("Имя пользователя");
         JLabel passwordLabel = new JLabel("Пароль");
         passwordField.setEchoChar('•');
         JButton signInButton = new JButton("Войти в систему");
 
-        signInButton.addActionListener(signInActionListener(loginTextField, passwordField));
-        loginTextField.addKeyListener(keysListener(loginTextField, passwordField));
-        passwordField.addKeyListener(keysListener(loginTextField, passwordField));
+        signInButton.addActionListener(signInActionListener());
+        loginTextField.addKeyListener(loginTextFieldKeyListener());
+        passwordField.addKeyListener(passwordFieldKeyListener());
         container.add(loginTextField);
         container.add(passwordField);
         container.add(signInButton);
         container.add(loginLabel);
         container.add(passwordLabel);
 
-        locate();
+//        SpringLayout layout = new SpringLayout();
+//        container.setLayout(layout);
+//        layout.putConstraint(SpringLayout.WEST, container, PADDING, SpringLayout.WEST, loginLabel);
+//        layout.putConstraint(SpringLayout.NORTH, container, PADDING, SpringLayout.NORTH, loginLabel);
+//        layout.putConstraint(SpringLayout.WEST, loginLabel, PADDING, SpringLayout.WEST, loginTextField);
+//        layout.putConstraint(SpringLayout.NORTH, container, PADDING, SpringLayout.NORTH, loginTextField);
+//        layout.putConstraint(SpringLayout.);
+
+        locateWindow();
         pack();
         setVisible(true);
     }
 
-    private void signIn(JTextField loginTextField, JPasswordField passwordField){
+    private void signIn(){
         if(dataManager.validate(loginTextField.getText(), passwordField.getPassword())){
             dispose();
             new GUI();
         }
         else {
-            JOptionPane.showMessageDialog(ValidationWindow.this,
-                    "Неправильный логин или пароль!",
-                    "Ошибка входа!",
-                    JOptionPane.ERROR_MESSAGE);
+            onValidationFailure();
         }
     }
 
-    private ActionListener signInActionListener(JTextField loginTextField, JPasswordField passwordField){
+    private void onValidationFailure(){
+        JOptionPane.showMessageDialog(ValidationWindow.this,
+                "Неправильный логин или пароль!",
+                "Ошибка входа!",
+                JOptionPane.ERROR_MESSAGE);
+        passwordField.setText("");
+        loginTextField.setText("");
+        loginTextField.requestFocus();
+    }
+
+    private void tryToSignIn(){
+        if(loginTextField.getText().isEmpty() || (passwordField.getPassword().length == 0)){
+            onValidationFailure();
+        }
+        else {
+            signIn();
+        }
+    }
+
+    private ActionListener signInActionListener(){
         ActionListener l = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                signIn(loginTextField, passwordField);
+                tryToSignIn();
             }
         };
         return l;
     }
 
-    private KeyListener keysListener(JTextField loginTextField, JPasswordField passwordField){
+    private KeyListener loginTextFieldKeyListener(){
         KeyListener l = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -79,11 +106,17 @@ public class ValidationWindow extends JDialog {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_ENTER:{
-                        signIn(loginTextField, passwordField);
-                        break;
-                    }
-                    case KeyEvent.VK_UP:{
-                        loginTextField.requestFocus();
+                        if(loginTextField.getText().isEmpty()) {
+                            onValidationFailure();
+                        }
+                        else {
+                            if(passwordField.getPassword().length == 0){
+                                passwordField.requestFocus();
+                            }
+                            else {
+                                signIn();
+                            }
+                        }
                         break;
                     }
                     case KeyEvent.VK_DOWN:{
@@ -95,15 +128,8 @@ public class ValidationWindow extends JDialog {
                         break;
                     }
                     case KeyEvent.VK_DELETE:{
-                        Component component = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
-                        if(component.getClass() == JTextField.class){
-                            loginTextField.setText("");
-                            return;
-                        }
-                        if(component.getClass() == JPasswordField.class){
-                            passwordField.setText("");
-                            return;
-                        }
+                        loginTextField.setText("");
+                        break;
                     }
                     default:break;
                 }
@@ -117,7 +143,111 @@ public class ValidationWindow extends JDialog {
         return l;
     }
 
-    private void locate(){
+    private KeyListener passwordFieldKeyListener(){
+        KeyListener l = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()){
+                    case KeyEvent.VK_ENTER:{
+                        tryToSignIn();
+                        break;
+                    }
+                    case KeyEvent.VK_UP:{
+                        loginTextField.requestFocus();
+                        break;
+                    }
+                    case KeyEvent.VK_ESCAPE:{
+                        dispose();
+                        break;
+                    }
+                    case KeyEvent.VK_DELETE:{
+                        passwordField.setText("");
+                        break;
+                    }
+                    default:break;
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        };
+        return l;
+    }
+
+//    private KeyListener keysListener(){
+//        KeyListener l = new KeyListener() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                switch (e.getKeyCode()){
+//                    case KeyEvent.VK_ENTER:{
+//                        if(loginTextField.getText().isEmpty()) {
+//                            onValidationFailure();
+//                        }
+//                        else {
+//                            if(passwordField.getPassword().length == 0){
+//                                if(KeyboardFocusManager.getCurrentKeyboardFocusManager()
+//                                        .getFocusOwner().getClass() == JTextField.class)
+//                                {
+//                                    passwordField.requestFocus();
+//                                }
+//                                else {
+//                                    onValidationFailure();
+//                                }
+//                            }
+//                            else {
+//                                signIn();
+//                            }
+//                        }
+//                        break;
+//                    }
+//                    case KeyEvent.VK_UP:{
+//                        loginTextField.requestFocus();
+//                        break;
+//                    }
+//                    case KeyEvent.VK_DOWN:{
+//                        passwordField.requestFocus();
+//                        break;
+//                    }
+//                    case KeyEvent.VK_ESCAPE:{
+//                        dispose();
+//                        break;
+//                    }
+//                    case KeyEvent.VK_DELETE:{
+//                        Component component = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+//                        if(component.getClass() == JTextField.class){
+//                            loginTextField.setText("");
+//                            break;
+//                        }
+//                        if(component.getClass() == JPasswordField.class){
+//                            passwordField.setText("");
+//                            break;
+//                        }
+//                    }
+//                    default:break;
+//                }
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//
+//            }
+//        };
+//        return l;
+//    }
+
+    private void locateWindow(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension windowSize = new Dimension(new Dimension(300, 145));
         Point point = new Point();
@@ -127,4 +257,5 @@ public class ValidationWindow extends JDialog {
         setResizable(false);
         setPreferredSize(windowSize);
     }
+
 }

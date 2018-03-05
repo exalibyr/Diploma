@@ -8,6 +8,7 @@ public class ValidationWindowLayout implements LayoutManager{
     private static final int GAP = 10;
 
     private Dimension dimension = new Dimension();
+    private int firstBaseline, secondBaseline;
 
     private Component loginLabel = null;
     private Component passwordLabel = null;
@@ -64,10 +65,6 @@ public class ValidationWindowLayout implements LayoutManager{
         parent.revalidate();
     }
 
-    public Dimension getDimension() {
-        return dimension;
-    }
-
     private Dimension calculateSize(Container parent){
         detectComponents(parent);
         dimension.width = 3 * GAP + loginTextField.getWidth();
@@ -76,6 +73,82 @@ public class ValidationWindowLayout implements LayoutManager{
         dimension.height = 4 * GAP + loginLabel.getHeight() + passwordLabel.getHeight() + validateButton.getHeight();
         return dimension;
     }
+
+//    @Override
+//    public void layoutContainer(Container parent) {
+//        detectComponents(parent);
+//        calculateSize(parent);
+//        int currentY, currentX;
+//        int biggestWidth = loginLabel.getWidth() >= passwordLabel.getWidth() ?
+//                loginLabel.getWidth() : passwordLabel.getWidth();
+////        Dimension componentPreferredSize = loginLabel.getWidth() >= passwordLabel.getWidth() ?
+////                loginLabel.getPreferredSize() : passwordLabel.getPreferredSize();
+////        loginLabel.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+////
+////        currentY += GAP + componentPreferredSize.height;
+////        passwordLabel.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+////
+////        currentX += GAP + componentPreferredSize.width;
+////        currentY = GAP;
+////        componentPreferredSize = loginTextField.getPreferredSize();
+////        loginTextField.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+////
+////        currentY += GAP + componentPreferredSize.height;
+////        componentPreferredSize = passwordField.getPreferredSize();
+////        passwordField.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+////
+////        currentX = GAP;
+////        currentY += GAP + componentPreferredSize.height;
+////        componentPreferredSize = validateButton.getPreferredSize();
+////        validateButton.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+//
+//        Dimension componentPreferredSize = loginLabel.getPreferredSize();
+//        currentX = GAP;
+//        currentY = firstBaseline - componentPreferredSize.height;
+//        loginLabel.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+//
+//        componentPreferredSize = loginTextField.getPreferredSize();
+//        currentX += GAP + biggestWidth;
+//        currentY = firstBaseline - componentPreferredSize.height;
+//        loginTextField.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+//
+//        componentPreferredSize = passwordLabel.getPreferredSize();
+//        currentX = GAP;
+//        currentY  = secondBaseline - componentPreferredSize.height;
+//        passwordLabel.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+//
+//        componentPreferredSize = passwordField.getPreferredSize();
+//        currentX += GAP + biggestWidth;
+//        currentY = secondBaseline - componentPreferredSize.height;
+//        passwordField.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+//
+//        componentPreferredSize = validateButton.getPreferredSize();
+//        currentX = GAP;
+//        currentY = secondBaseline + GAP;
+//        validateButton.setBounds(currentX, currentY, componentPreferredSize.width, componentPreferredSize.height);
+//
+//        parent.revalidate();
+//    }
+
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+//    private Dimension calculateSize(Container parent){
+//        detectComponents(parent);
+//        //полагается, что поля для ввода пароля и логина одинаковые по ширине
+//        //рассчитываем размеры контейнера по комонентам и промежуткам сверху вниз и слева направо
+//        dimension.width = 3 * GAP + loginTextField.getWidth();
+//        dimension.width += loginLabel.getWidth() >= passwordLabel.getWidth() ?
+//                loginLabel.getWidth() : passwordLabel.getWidth();
+//
+//        firstBaseline = GAP + loginLabel.getHeight() >= loginTextField.getHeight() ?
+//                loginLabel.getHeight() : loginTextField.getHeight();
+//        secondBaseline = firstBaseline + GAP + passwordLabel.getHeight() >= passwordField.getHeight() ?
+//                passwordLabel.getHeight() : passwordField.getHeight();
+//        dimension.height = secondBaseline + GAP + validateButton.getHeight() + GAP;
+//        return dimension;
+//    }
 
     private void detectComponents(Container parent){
         Component[] components = parent.getComponents();
