@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 18 2018 г., 20:06
+-- Время создания: Мар 11 2018 г., 19:28
 -- Версия сервера: 5.7.19
 -- Версия PHP: 5.6.31
 
@@ -21,6 +21,36 @@ SET time_zone = "+00:00";
 --
 -- База данных: `nanobase`
 --
+
+DELIMITER $$
+--
+-- Процедуры
+--
+DROP PROCEDURE IF EXISTS `get_values`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_values` (IN `matrixName` VARCHAR(255), IN `questionName` VARCHAR(255) CHARSET utf8)  BEGIN
+	SELECT nlf.FILL_NAME, nfa.ANSWER_TEXT, nla.ANSWER_NAME
+	FROM nano_l_questions nlq, nano_l_answers nla, nano_f_answers nfa, nano_f_datum nfd, nano_l_matrix nlm, nano_l_fill nlf
+	WHERE nlq.QUESTION_ID = nla.QUESTION_ID
+	AND nla.ANSWER_ID = nfa.ANSWER_ID
+	AND nfa.DATA_ID = nfd.DATA_ID
+	AND nfd.MATRIX_ID = nlm.MATRIX_ID
+    AND nlf.FILL_ID = nfd.FILL_ID
+	AND nlm.MATRIX_NAME = matrixName
+    AND nlq.QUESTION_NAME = questionName;
+END$$
+
+DROP PROCEDURE IF EXISTS `update_questions`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_questions` (IN `matrixName` VARCHAR(255))  BEGIN 
+	SELECT nlq.QUESTION_NAME_ENG 
+	FROM nano_l_questions nlq, nano_l_answers nla, nano_f_answers nfa, nano_f_datum nfd, nano_l_matrix nlm
+	WHERE nlq.QUESTION_ID = nla.QUESTION_ID
+	AND nla.ANSWER_ID = nfa.ANSWER_ID
+	AND nfa.DATA_ID = nfd.DATA_ID
+	AND nfd.MATRIX_ID = nlm.MATRIX_ID
+	AND nlm.MATRIX_NAME = matrixName;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -151,6 +181,17 @@ CREATE TABLE IF NOT EXISTS `info_about_ceramic_composites` (
 ,`MATRIX_NAME` varchar(255)
 ,`FILL_NAME` varchar(255)
 ,`full_name` text
+);
+
+-- --------------------------------------------------------
+
+--
+-- Дублирующая структура для представления `matrix_kinds`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `matrix_kinds`;
+CREATE TABLE IF NOT EXISTS `matrix_kinds` (
+`MATRIX_NAME` varchar(255)
 );
 
 -- --------------------------------------------------------
@@ -5302,7 +5343,15 @@ INSERT INTO `nano_f_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_LO_NUMBER`, `A
 (200, 1, NULL, 'Siemens D5000 diffractometer with the Cu K&#945; radiation (&#955;=0,15406 nm) from 1,5 to 30° by step of 0,04°', 413, NULL),
 (204, 1, NULL, ' the heating rate is decreased from 20 to 5 °C/min - 13°C', 413, NULL),
 (203, 1, NULL, '47.5°C', 413, NULL),
-(197, 1, NULL, 'Perkin–Elmer DSC-7 differential scanning calorimeter. The crystalline content of the injection moulded specimens was calculated from the crystallization and melting enthalpies measured from the areas of the correspondent peaks of the first heating scan and the melting enthalpy of 100% crystalline PTT (145 J/g)', 413, NULL);
+(197, 1, NULL, 'Perkin–Elmer DSC-7 differential scanning calorimeter. The crystalline content of the injection moulded specimens was calculated from the crystallization and melting enthalpies measured from the areas of the correspondent peaks of the first heating scan and the melting enthalpy of 100% crystalline PTT (145 J/g)', 413, NULL),
+(240, 23, NULL, '3.96', 414, NULL),
+(204, 24, NULL, '2050', 414, NULL),
+(53, 25, NULL, '30.14; 12.4; 6.4;', 414, NULL),
+(87, 26, NULL, '30000000000; 0.0009;', 414, NULL),
+(241, 27, NULL, '8', 414, NULL),
+(71, 28, NULL, '374; 315; 147;', 414, NULL),
+(242, 29, NULL, '650; 50', 414, NULL),
+(243, 30, NULL, '26', 414, NULL);
 
 -- --------------------------------------------------------
 
@@ -5322,7 +5371,7 @@ CREATE TABLE IF NOT EXISTS `nano_f_datum` (
   KEY `MATRIX_ID` (`MATRIX_ID`),
   KEY `FILL_ID` (`FILL_ID`),
   KEY `ARTICLE_ID` (`ARTICLE_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=414 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=415 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_f_datum`
@@ -5726,7 +5775,8 @@ INSERT INTO `nano_f_datum` (`DATA_ID`, `ARTICLE_ID`, `COMPOSITE_ID`, `MATRIX_ID`
 (410, 351, 57, 68, 64),
 (411, 352, 58, 61, 62),
 (412, 353, 59, 194, 65),
-(413, 354, 50, 191, 50);
+(413, 354, 50, 191, 50),
+(414, 355, 60, 196, 66);
 
 -- --------------------------------------------------------
 
@@ -6162,7 +6212,15 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (187, 1, 3, 'Название', NULL),
 (187, 2, 2, 'масс %', NULL),
 (188, 1, 3, 'не определено', NULL),
-(189, 1, 2, 'м/с', NULL);
+(189, 1, 2, 'м/с', NULL),
+(240, 23, 2, 'г/см3', 'g/sm3'),
+(204, 24, 2, '°C', '°C'),
+(53, 25, 2, 'Вт/(K*м); при 100°C; при 400°C; при 1000°C', 'W/(K*m); at 100°C; at 400°C; at 1000°C'),
+(87, 26, 2, 'Ом*см; при 100°C; при 1300°C)', 'Ohm*cm; at 100°C; at 1300°C'),
+(241, 27, 2, 'α•10⁶ K⁻⁶ (20-1400°C)', 'α•10⁶ K⁻⁶ (20-1400°C)'),
+(71, 28, 2, 'ГПа; при 20°C; при 1000°C; при 1500°C', 'GPa; at 20°C; at 1000°C; 1500°C'),
+(242, 29, 2, 'МПА; 20°C; 1500°C', 'MPa; 20°C; 1500°C'),
+(243, 30, 2, 'ГПа (при 20°C)', 'GPa (at 20°C)');
 
 -- --------------------------------------------------------
 
@@ -6211,7 +6269,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_articles` (
   `FILE` text NOT NULL,
   PRIMARY KEY (`ARTICLE_ID`),
   KEY `COUNTRY_ID` (`COUNTRY_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=355 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=356 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_articles`
@@ -6557,7 +6615,8 @@ INSERT INTO `nano_l_articles` (`ARTICLE_ID`, `ARTICLE_NAME`, `YEAR_ID`, `JOURNAL
 (351, 'Electrochemical studies of poly (3,4-ethylenedioxythiophene) PEDOT/VS2 nanocomposite as a cathode material for rechargeable lithium batteries', 2005, 'Electrochemistry Communications', NULL, 0, '213-218', '7', 2, 'A.Vadivel Murugan Chinnakonda S. Gopinath and K. Vijayamohanan', 4, '57.pdf'),
 (352, 'Chloroform vapour sensor based on copper/polyaniline nanocomposite', 2002, 'Sensors and Actuators B: Chemical', NULL, 0, '131-136', '85', 0, 'Satish , Chetan , Sushama and Anjali A. ,', 4, '58.pdf'),
 (353, 'Synthesis and characterization of NiO–Ta2O5 nanocompositeelectrode for electrochromic devices', 2005, 'Electrochemistry Communications', NULL, 0, '567-571', '7', 6, 'Hyo-Jin Ahn, Hee-Sang Shim, Youn-Su Kim, Chan-Young Kim and Tae-Yeon Seong', 4, '59.pdf'),
-(354, 'Structure and properties of nanocomposites with a poly(trimethylene terephthalate) matrix', 2008, 'European Polymer Journal', NULL, 0, '1686-1695', '44', 6, 'U. Gurmendia, J.I. Eguiazabala and J. Nazabal,', 4, '60.pdf');
+(354, 'Structure and properties of nanocomposites with a poly(trimethylene terephthalate) matrix', 2008, 'European Polymer Journal', NULL, 0, '1686-1695', '44', 6, 'U. Gurmendia, J.I. Eguiazabala and J. Nazabal,', 4, '60.pdf'),
+(355, '4.2.1. Керамика на основе Al2O3', 2004, 'Техническая керамика. Учебное пособие ТПУ Томск.', NULL, 1, '30-36', '6', NULL, 'С.В.Матренин, А.И.Слосман', 7, 'mechanical_engineering.pdf');
 
 -- --------------------------------------------------------
 
@@ -6572,7 +6631,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_composite` (
   `full_name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `un_name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_composite`
@@ -6636,7 +6695,8 @@ INSERT INTO `nano_l_composite` (`id`, `name`, `full_name`) VALUES
 (56, 'Au/CdS', ''),
 (57, 'PEDOT/VS2', ''),
 (58, 'Cu/PANi', 'copper/polyaniline'),
-(59, 'NiO–Ta2O5 ', '');
+(59, 'NiO–Ta2O5 ', ''),
+(60, 'Al2O3-TiO2(MgO)', 'спечённая корундовая керамика');
 
 -- --------------------------------------------------------
 
@@ -6653,7 +6713,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_fill` (
   `FILL_DESC_ENG` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`FILL_ID`),
   KEY `FILL_CATEGORY` (`FILL_CATEGORY`)
-) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_fill`
@@ -6724,7 +6784,8 @@ INSERT INTO `nano_l_fill` (`FILL_ID`, `FILL_CATEGORY`, `FILL_NAME`, `FILL_DESC`,
 (62, 13, 'Cu', '', ''),
 (63, 0, 'multiphase systems', '', ''),
 (64, 6, 'VS2', '', ''),
-(65, 2, 'NiO', '', '');
+(65, 2, 'NiO', '', ''),
+(66, 2, 'TiO2(MgO)', 'либо оксид титана, либо оксид магния', 'either TiO2 or MgO');
 
 -- --------------------------------------------------------
 
@@ -6741,7 +6802,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_matrix` (
   `MATRIX_NAME_DESC` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`MATRIX_ID`),
   KEY `MATRIX_CATEGORY` (`MATRIX_CATEGORY`)
-) ENGINE=MyISAM AUTO_INCREMENT=196 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_matrix`
@@ -6910,7 +6971,8 @@ INSERT INTO `nano_l_matrix` (`MATRIX_ID`, `MATRIX_CATEGORY`, `MATRIX_NAME`, `MAT
 (192, 2, 'ZnO', '', NULL),
 (193, 6, 'CdS', '', NULL),
 (194, 2, 'Ta2O5', '', NULL),
-(195, 11, 'PEL', 'Polyethylene-layered', NULL);
+(195, 11, 'PEL', 'Polyethylene-layered', NULL),
+(196, 12, 'Al2O3', 'Al2O3', NULL);
 
 -- --------------------------------------------------------
 
@@ -7076,7 +7138,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_questions` (
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`QUESTION_ID`),
   KEY `QUESTION_GROUP_ID` (`QUESTION_GROUP_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=244 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_questions`
@@ -7288,7 +7350,11 @@ INSERT INTO `nano_l_questions` (`QUESTION_ID`, `QUESTION_GROUP_ID`, `QUESTION_NA
 (236, 0, '', 'reduced modulus', '', 1),
 (237, 10, '', 'Linear range', '', 1),
 (238, 10, '', 'Particle diameter', '', 1),
-(239, 10, '', 'Discharge capacity', '', 1);
+(239, 10, '', 'Discharge capacity', '', 1),
+(240, 10, 'плотность', 'density', '', 1),
+(241, 9, 'линейный коэффициент теплового расширения', 'Linear thermal expansion coefficient', '', 1),
+(242, 10, 'предел прочности при изгибе', 'ultimate bending strength', '', 1),
+(243, 10, 'микротвёрдость', 'microhardness', '', 1);
 
 -- --------------------------------------------------------
 
@@ -7337,7 +7403,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_tabulators` (
   `TABULATOR_ID` int(5) NOT NULL AUTO_INCREMENT,
   `TABULATOR_NAME` varchar(255) NOT NULL,
   PRIMARY KEY (`TABULATOR_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_tabulators`
@@ -7349,7 +7415,22 @@ INSERT INTO `nano_l_tabulators` (`TABULATOR_ID`, `TABULATOR_NAME`) VALUES
 (2, 'OLD IS Nanotube'),
 (1, 'КУЕ'),
 (3, 'Z'),
-(4, 'Екатерина Порысева');
+(4, 'Екатерина Порысева'),
+(7, 'alexey');
+
+-- --------------------------------------------------------
+
+--
+-- Дублирующая структура для представления `properties_of_ceramic_nanocomposites`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `properties_of_ceramic_nanocomposites`;
+CREATE TABLE IF NOT EXISTS `properties_of_ceramic_nanocomposites` (
+`DATA_ID` int(9)
+,`QUESTION_NAME` varchar(255)
+,`ANSWER_TEXT` text
+,`ANSWER_NAME` text
+);
 
 -- --------------------------------------------------------
 
@@ -7361,6 +7442,21 @@ DROP VIEW IF EXISTS `questions_and_answers_for_ceramic_composites`;
 CREATE TABLE IF NOT EXISTS `questions_and_answers_for_ceramic_composites` (
 `DATA_ID` int(9)
 ,`QUESTION_NAME` varchar(255)
+,`ANSWER_TEXT` text
+,`ANSWER_NAME` text
+);
+
+-- --------------------------------------------------------
+
+--
+-- Дублирующая структура для представления `target_properties`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `target_properties`;
+CREATE TABLE IF NOT EXISTS `target_properties` (
+`MATRIX_NAME` varchar(255)
+,`FILL_NAME` varchar(255)
+,`QUESTION_NAME_ENG` varchar(255)
 ,`ANSWER_TEXT` text
 ,`ANSWER_NAME` text
 );
@@ -7384,7 +7480,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`) VALUES
-(1, 'user', 'bb035eec33c489c71279ab505654f40f'),
 (2, 'alexey', 'alexey');
 
 -- --------------------------------------------------------
@@ -7399,11 +7494,38 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Структура для представления `matrix_kinds`
+--
+DROP TABLE IF EXISTS `matrix_kinds`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `matrix_kinds`  AS  select `nlm`.`MATRIX_NAME` AS `MATRIX_NAME` from ((`nano_l_matrix` `nlm` join `category_matrix` `cm`) join `nano_f_datum` `nfd`) where ((`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nfd`.`DATA_ID` <> 367) and (`cm`.`name` = 'Керамика')) ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура для представления `properties_of_ceramic_nanocomposites`
+--
+DROP TABLE IF EXISTS `properties_of_ceramic_nanocomposites`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `properties_of_ceramic_nanocomposites`  AS  select `nfa`.`DATA_ID` AS `DATA_ID`,`nlq`.`QUESTION_NAME` AS `QUESTION_NAME`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT`,`nla`.`ANSWER_NAME` AS `ANSWER_NAME` from ((`nano_l_answers` `nla` join `nano_l_questions` `nlq`) join `nano_f_answers` `nfa`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and `nfa`.`DATA_ID` in (select `nfa`.`DATA_ID` from (((`nano_l_matrix` `nlm` join `category_matrix` `cm`) join `nano_f_datum` `nfd`) join `nano_f_answers` `nfa`) where ((`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`DATA_ID` <> 367) and (`cm`.`name` = 'Керамика')))) ;
+
+-- --------------------------------------------------------
+
+--
 -- Структура для представления `questions_and_answers_for_ceramic_composites`
 --
 DROP TABLE IF EXISTS `questions_and_answers_for_ceramic_composites`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `questions_and_answers_for_ceramic_composites`  AS  select `nfa`.`DATA_ID` AS `DATA_ID`,`nlq`.`QUESTION_NAME` AS `QUESTION_NAME`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT`,`nla`.`ANSWER_NAME` AS `ANSWER_NAME` from ((`nano_l_answers` `nla` join `nano_l_questions` `nlq`) join `nano_f_answers` `nfa`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and `nfa`.`DATA_ID` in (select `nfa`.`DATA_ID` from (((`nano_l_matrix` `nlm` join `category_matrix` `cm`) join `nano_f_datum` `nfd`) join `nano_f_answers` `nfa`) where ((`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`cm`.`name` = 'Керамика')))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура для представления `target_properties`
+--
+DROP TABLE IF EXISTS `target_properties`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `target_properties`  AS  select `nlm`.`MATRIX_NAME` AS `MATRIX_NAME`,`nlf`.`FILL_NAME` AS `FILL_NAME`,`nlq`.`QUESTION_NAME_ENG` AS `QUESTION_NAME_ENG`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT`,`nla`.`ANSWER_NAME` AS `ANSWER_NAME` from ((((((`nano_l_questions` `nlq` join `nano_l_answers` `nla`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `nano_l_fill` `nlf`) join `category_matrix` `cm`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nlf`.`FILL_ID` = `nfd`.`FILL_ID`) and (`cm`.`id` = `nlm`.`MATRIX_CATEGORY`) and (`cm`.`name` = 'Керамика') and (`nfd`.`DATA_ID` <> 367)) ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

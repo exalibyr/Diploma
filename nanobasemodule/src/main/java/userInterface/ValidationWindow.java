@@ -14,7 +14,6 @@ public class ValidationWindow extends JDialog {
 
     private static final int PADDING = 10;
 
-    private DataManager dataManager = new DataManager();
     private JTextField loginTextField = new JTextField(12);
     private JPasswordField passwordField = new JPasswordField(12);
 
@@ -26,7 +25,7 @@ public class ValidationWindow extends JDialog {
         ValidationWindowLayout layout = new ValidationWindowLayout();
         setLayout(layout);
 
-        dataManager.registerMySQLDriver();
+        DataManager.registerMySQLDriver();
 
         Container container = getContentPane();
         JLabel loginLabel = new JLabel("Имя пользователя");
@@ -43,23 +42,15 @@ public class ValidationWindow extends JDialog {
         container.add(loginLabel);
         container.add(passwordLabel);
 
-//        SpringLayout layout = new SpringLayout();
-//        container.setLayout(layout);
-//        layout.putConstraint(SpringLayout.WEST, container, PADDING, SpringLayout.WEST, loginLabel);
-//        layout.putConstraint(SpringLayout.NORTH, container, PADDING, SpringLayout.NORTH, loginLabel);
-//        layout.putConstraint(SpringLayout.WEST, loginLabel, PADDING, SpringLayout.WEST, loginTextField);
-//        layout.putConstraint(SpringLayout.NORTH, container, PADDING, SpringLayout.NORTH, loginTextField);
-//        layout.putConstraint(SpringLayout.);
-
         locateWindow();
         pack();
         setVisible(true);
     }
 
     private void signIn(){
-        if(dataManager.validate(loginTextField.getText(), passwordField.getPassword())){
+        if(DataManager.validate(loginTextField.getText(), passwordField.getPassword())){
             dispose();
-            new GUI();
+            new GraphicalAnalyticalModule();
         }
         else {
             onValidationFailure();
