@@ -38,6 +38,12 @@ public class GraphicalAnalyticalModule extends JFrame {
         JLabel dataLabel = new JLabel("Данные по нанокомпозитам");
         queryList = UIBuilder.buildQueryList();
         JButton getResultButton = new JButton("Получить данные");
+        JLabel compositeShapeLabelQuestion = new JLabel("Кристаллическая структура: ");
+        JLabel compositeShapeLabelAnswer = new JLabel();
+        JLabel delimiter = new JLabel("__________________________");
+        JLabel obtainingMethodLabelQuestion = new JLabel("Способ получения:");
+        JLabel obtainingMethodLabelAnswer = new JLabel("");
+
 
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new VerticalLayout());
@@ -50,6 +56,11 @@ public class GraphicalAnalyticalModule extends JFrame {
         controlPanel.add(dataLabel);
         controlPanel.add(queryList);
         controlPanel.add(getResultButton);
+        controlPanel.add(compositeShapeLabelQuestion);
+        controlPanel.add(compositeShapeLabelAnswer);
+        controlPanel.add(delimiter);
+        controlPanel.add(obtainingMethodLabelQuestion);
+        controlPanel.add(obtainingMethodLabelAnswer);
         container.add(BorderLayout.WEST, controlPanel);
 
         matrixComboBox.addActionListener(matrixComboBoxActionListener());
@@ -126,7 +137,7 @@ public class GraphicalAnalyticalModule extends JFrame {
                 if(resultPanel != null) {
                     container.remove(resultPanel);
                 }
-                resultTable =  DataManager.getResultTable(queryList.getSelectedValue());
+                resultTable =  DataManager.getResultTable(transformToViewName(queryList.getSelectedValue()));
                 resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 resultPanel = new JScrollPane(resultTable,
                         ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -136,6 +147,21 @@ public class GraphicalAnalyticalModule extends JFrame {
             }
         };
         return l;
+    }
+
+    private String transformToViewName(String selectedItem){
+        switch (selectedItem){
+            case "Свойства керамических нанокомпозитов":{
+                return "properties_view";
+            }
+            case "Статьи по керамическим нанокомпозитам":{
+                return "articles";
+            }
+            case "Свойства кермических нанокомпозитов (старые)":{
+                return "properties_view_old";
+            }
+            default: throw new RuntimeException();
+        }
     }
 
 }

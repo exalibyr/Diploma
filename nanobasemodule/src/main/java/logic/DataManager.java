@@ -94,6 +94,10 @@ public class DataManager {
         }
     }
 
+    public static String getCompositeShapeAndObtainingMethodData(){
+        return "ghdgh";
+    }
+
     public static CategoryDataset getDataset(String matrixName, String propertyName){
         final String DELIMITER = ";";
         DefaultCategoryDataset dataset = null;
