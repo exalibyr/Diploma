@@ -28,7 +28,7 @@ class UIBuilder {
 
     static JFreeChart createBarChart(CategoryDataset dataset, String propertyName, String matrixName){
         JFreeChart chart = ChartFactory.createBarChart("График значений свойства - " + propertyName,
-                "Название наполнителей",
+                "Название нанокомпозита (наполнитель)",
                 "Значение свойства",
                 dataset);
         chart.addSubtitle(new TextTitle("Матрица - " + matrixName));
@@ -45,7 +45,7 @@ class UIBuilder {
 
     static JFreeChart createBarChartExample(CategoryDataset dataset){
         JFreeChart chart = ChartFactory.createBarChart("График значений свойства",
-                "Названия наполнителей",
+                "Название нанокомпозита (наполнитель)",
                 "Значение свойства",
                 dataset);
         chart.addSubtitle(new TextTitle("Название матрицы"));

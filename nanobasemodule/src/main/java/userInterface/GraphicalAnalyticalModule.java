@@ -1,8 +1,10 @@
 package userInterface;
 
 
+import logic.Converter;
 import logic.DataManager;
 import logic.DatasetBuilder;
+import logic.Properties;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
@@ -10,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 public class GraphicalAnalyticalModule extends JFrame {
 
@@ -20,6 +23,8 @@ public class GraphicalAnalyticalModule extends JFrame {
     private JComponent resultPanel = null;
     private JTable resultTable = null;
     private JList<String> queryList;
+
+    private Properties propertiesCache;
 
     public GraphicalAnalyticalModule(){
         setTitle("Графически-аналитический модуль");
@@ -32,7 +37,8 @@ public class GraphicalAnalyticalModule extends JFrame {
         matrixComboBox = new JComboBox<>(DataManager.getMatrixKinds());
         selectedMatrix = (String) matrixComboBox.getSelectedItem();
         JLabel propertyLabel = new JLabel("Выбор свойства");
-        propertyComboBox = new JComboBox<>(DataManager.getPropertiesList(selectedMatrix));
+        propertiesCache = DataManager.getPropertiesList(selectedMatrix);
+        propertyComboBox = new JComboBox<>(propertiesCache.getPropertiesRus());
         JButton drawBarChartButton = new JButton("Построить диаграмму");
         JButton drawExampleChartButton = new JButton("Пример диаграммы");
         JLabel dataLabel = new JLabel("Данные по нанокомпозитам");
@@ -98,9 +104,8 @@ public class GraphicalAnalyticalModule extends JFrame {
                 String matrix = (String) matrixComboBox.getSelectedItem();
                 if(!matrix.equals(selectedMatrix)){
                     propertyComboBox.removeAllItems();
-                    propertyComboBox = new JComboBox<>(
-                            DataManager.getPropertiesList(matrix)
-                    );
+                    propertiesCache = DataManager.getPropertiesList(matrix);
+                    propertyComboBox = new JComboBox<>(propertiesCache.getPropertiesRus());
                 }
             }
         };
@@ -114,10 +119,11 @@ public class GraphicalAnalyticalModule extends JFrame {
                 if(resultPanel != null){
                     container.remove(resultPanel);
                 }
-                String selectedProperty = (String) propertyComboBox.getSelectedItem();
+                String selectedPropertyEng = propertiesCache.getPropertiesEng().get(propertyComboBox.getSelectedIndex());
+                String selectedPropertyRus = (String) propertyComboBox.getSelectedItem();
                 JFreeChart chart = UIBuilder.createBarChart(
-                        DataManager.getDataset(selectedMatrix, selectedProperty),
-                        selectedProperty,
+                        DataManager.getDataset(selectedMatrix, selectedPropertyEng),
+                        selectedPropertyRus,
                         selectedMatrix
                         );
                 resultPanel = new ChartPanel(chart);
@@ -137,7 +143,7 @@ public class GraphicalAnalyticalModule extends JFrame {
                 if(resultPanel != null) {
                     container.remove(resultPanel);
                 }
-                resultTable =  DataManager.getResultTable(transformToViewName(queryList.getSelectedValue()));
+                resultTable =  DataManager.getResultTable(Converter.convertToViewName(queryList.getSelectedValue()));
                 resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 resultPanel = new JScrollPane(resultTable,
                         ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -147,21 +153,6 @@ public class GraphicalAnalyticalModule extends JFrame {
             }
         };
         return l;
-    }
-
-    private String transformToViewName(String selectedItem){
-        switch (selectedItem){
-            case "Свойства керамических нанокомпозитов":{
-                return "properties_view";
-            }
-            case "Статьи по керамическим нанокомпозитам":{
-                return "articles";
-            }
-            case "Свойства кермических нанокомпозитов (старые)":{
-                return "properties_view_old";
-            }
-            default: throw new RuntimeException();
-        }
     }
 
 }

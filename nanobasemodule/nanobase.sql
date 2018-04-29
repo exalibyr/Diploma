@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 25 2018 г., 20:44
+-- Время создания: Апр 29 2018 г., 14:46
 -- Версия сервера: 5.7.19
 -- Версия PHP: 5.6.31
 
@@ -42,7 +42,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `update_questions`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_questions` (IN `matrixName` TEXT CHARSET utf8)  BEGIN 
-	SELECT DISTINCT nlq.QUESTION_NAME_ENG 
+	SELECT DISTINCT nlq.QUESTION_NAME, nlq.QUESTION_NAME_ENG 
 	FROM nano_l_questions nlq, nano_l_answers nla, nano_f_answers nfa, nano_f_datum nfd, nano_l_matrix nlm
 	WHERE nlq.QUESTION_ID = nla.QUESTION_ID AND nla.QUESTION_ID = nfa.QUESTION_ID
 	AND nla.ANSWER_ID = nfa.ANSWER_ID
@@ -5356,9 +5356,31 @@ INSERT INTO `nano_f_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_LO_NUMBER`, `A
 (63, 30, NULL, '0.02', 415, NULL),
 (242, 31, NULL, '280', 415, NULL),
 (85, 34, NULL, '10.3', 415, NULL),
-(86, 35, NULL, '2', 415, NULL),
+(86, 9, NULL, '1', 415, NULL),
 (87, 36, NULL, '100000000000000', 415, NULL),
-(241, 37, NULL, '8.5', 415, NULL);
+(241, 37, NULL, '8.5', 415, NULL),
+(240, 23, NULL, '3.88', 416, NULL),
+(63, 30, NULL, '0.02', 416, NULL),
+(242, 31, NULL, '320', 416, NULL),
+(244, 1, NULL, '5', 416, NULL),
+(71, 32, NULL, '3.9', 416, NULL),
+(53, 3, NULL, '42', 416, NULL),
+(85, 34, NULL, '10.5', 416, NULL),
+(86, 8, NULL, '2', 415, NULL),
+(87, 36, NULL, '100000000000000', 416, NULL),
+(88, 7, NULL, '42', 416, NULL),
+(241, 37, NULL, '8.4', 416, NULL),
+(86, 9, NULL, '1', 416, NULL),
+(86, 8, NULL, '2', 416, NULL),
+(85, 35, NULL, '10.1', 416, NULL),
+(240, 23, NULL, '3.65', 417, NULL),
+(63, 30, NULL, '0.02', 417, NULL),
+(242, 31, NULL, '320', 417, NULL),
+(85, 34, NULL, '10.3', 417, NULL),
+(85, 35, NULL, '10.3', 417, NULL),
+(86, 8, NULL, '6', 417, NULL),
+(86, 9, NULL, '15', 417, NULL),
+(87, 36, NULL, '10000000000000', 417, NULL);
 
 -- --------------------------------------------------------
 
@@ -5378,7 +5400,7 @@ CREATE TABLE IF NOT EXISTS `nano_f_datum` (
   KEY `MATRIX_ID` (`MATRIX_ID`),
   KEY `FILL_ID` (`FILL_ID`),
   KEY `ARTICLE_ID` (`ARTICLE_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=416 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=418 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_f_datum`
@@ -5784,7 +5806,9 @@ INSERT INTO `nano_f_datum` (`DATA_ID`, `ARTICLE_ID`, `COMPOSITE_ID`, `MATRIX_ID`
 (412, 353, 59, 194, 65),
 (413, 354, 50, 191, 50),
 (414, 355, 60, 196, 66),
-(415, 356, 61, 196, 67);
+(415, 356, 61, 196, 67),
+(416, 357, 62, 196, 67),
+(417, 357, 63, 196, 67);
 
 -- --------------------------------------------------------
 
@@ -6231,12 +6255,17 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (243, 30, 2, 'ГПа (при 20°C)', 'GPa (at 20°C)'),
 (63, 30, 2, '%', '%'),
 (242, 31, 2, 'МПА', 'MPa'),
-(71, 32, 2, 'Е•10-2, ГПа', 'Е•10-2, GPa'),
+(71, 32, 2, 'Е•10⁻², ГПа', 'Е•10⁻², GPa'),
 (53, 33, 2, 'Вт/(м•К)', 'W/(K•m)'),
 (85, 34, 2, 'при 25°C и частоте 10⁶ Гц', 'at 25°C and frequency 10⁶ Hz'),
-(86, 35, 2, 'tgδ•10⁴, при 25°C и частоте 10⁶/10⁹ Гц', 'tgδ•10⁴, at 25°C and frecuency 10⁶/10⁹ Hz'),
+(86, 8, 2, 'tgδ•10⁴, при 25°C и частоте 10⁶ Гц', 'tgδ•10⁴, at 25°C and frecuency 10⁶ Hz'),
 (87, 36, 2, ', Ом•см, при 100°С', 'Ohm•cm, at 100°С'),
-(241, 37, 2, 'α•10⁶ при 20-900°C, K⁻1', 'α•10⁶ at 20-900°C, K⁻1');
+(241, 37, 2, 'α•10⁶ при 20-900°C, K⁻¹', 'α•10⁶ at 20-900°C, K⁻¹'),
+(244, 1, 2, 'кПа•м²', 'kPa•m²'),
+(53, 3, 2, 'Вт/(К•м)', 'W/(K•m)'),
+(88, 7, 2, 'кВ/мм', 'kV/mm'),
+(86, 9, 2, 'tgδ•10⁴, при 25°C и частоте 10¹⁰ Гц', 'tgδ•10⁴, at 25°C and frecuency 10¹⁰ Hz'),
+(85, 35, 2, 'при 25°C и частоте 10¹⁰ Гц', 'at 25°C and frequency 10¹⁰ Hz');
 
 -- --------------------------------------------------------
 
@@ -6285,7 +6314,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_articles` (
   `FILE` text NOT NULL,
   PRIMARY KEY (`ARTICLE_ID`),
   KEY `COUNTRY_ID` (`COUNTRY_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=357 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=358 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_articles`
@@ -6633,7 +6662,8 @@ INSERT INTO `nano_l_articles` (`ARTICLE_ID`, `ARTICLE_NAME`, `YEAR_ID`, `JOURNAL
 (353, 'Synthesis and characterization of NiO–Ta2O5 nanocompositeelectrode for electrochromic devices', 2005, 'Electrochemistry Communications', NULL, 0, '567-571', '7', 6, 'Hyo-Jin Ahn, Hee-Sang Shim, Youn-Su Kim, Chan-Young Kim and Tae-Yeon Seong', 4, '59.pdf'),
 (354, 'Structure and properties of nanocomposites with a poly(trimethylene terephthalate) matrix', 2008, 'European Polymer Journal', NULL, 0, '1686-1695', '44', 6, 'U. Gurmendia, J.I. Eguiazabala and J. Nazabal,', 4, '60.pdf'),
 (355, '4.2.1. Керамика на основе Al2O3', 2004, 'Техническая керамика. Учебное пособие ТПУ Томск.', NULL, 1, '30-36', '6', NULL, 'С.В.Матренин, А.И.Слосман', 7, 'mechanical_engineering.pdf'),
-(356, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники', 2016, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники: дисс., Москва', NULL, 1, '', '', NULL, 'Амелина О.Д.', 7, '');
+(356, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники', 2016, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники: дисс., Москва', NULL, 1, '', '', NULL, 'Амелина О.Д.', 7, ''),
+(357, 'Вакуум-плотная корундовая керамика на основе ультрадисперсных порошков', 2010, 'НАНОИНДУСТРИЯ', NULL, 1, '40-41', '2', 5, 'Амелина O.Д., Нестеров C.', 7, 'article_1812_291.pdf');
 
 -- --------------------------------------------------------
 
@@ -6646,77 +6676,77 @@ CREATE TABLE IF NOT EXISTS `nano_l_composite` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `full_name` text NOT NULL,
-  `MATRIX_FRACTION` text,
-  `FILL_FRACTION` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `un_name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_composite`
 --
 
-INSERT INTO `nano_l_composite` (`id`, `name`, `full_name`, `MATRIX_FRACTION`, `FILL_FRACTION`) VALUES
-(1, 'poly(vinyl alcohol)–clay', '', NULL, NULL),
-(2, 'PBSA', 'poly[(butylene succinate)-co-adipate]', NULL, NULL),
-(3, 'PVdF/LiClO4/TiO2', 'polymer - poly(vinylidene fluoride) (PVdF), lithium perchlorate (LiClO4) and TiO2 nanoparticles', NULL, NULL),
-(5, 'TiAlSiN coatin', '', NULL, NULL),
-(6, 'LDPE/Mg–Al LDH', 'LDPE/Mg–Al layered double hydroxide', NULL, NULL),
-(7, 'St–BA/GO', 'Styrene–butyl acrylate copolymer /graphite oxide ', NULL, NULL),
-(8, 'PANI/Clino', 'Polyaniline / Clinoptilolite ', NULL, NULL),
-(9, 'SnO2–In2O3', 'gas-sensing nanocomposites of SnO2–In2O3 ', NULL, NULL),
-(10, 'PGO', 'Polystyrene intercalated graphite oxide', NULL, NULL),
-(11, 'Si/SiO', '', NULL, NULL),
-(12, 'Ag@TiO2', 'Ag@TiO2 core–shell nanocomposite nanowires', NULL, NULL),
-(13, 'SnO2–hexaniobate layered', '', NULL, NULL),
-(14, 'EO/LDH', 'The oligo(ethylene oxide) modified layered double hydroxide (LDH)', NULL, NULL),
-(15, 'PEO/Laponite', 'poly(ethylene oxide)/Laponite', NULL, NULL),
-(16, 'PU/OMMT', 'polyurethane/organically modified montmorillonite (OMMT) clay', NULL, NULL),
-(17, 'PAS–POSS', 'poly(acetoxystyrenezhi-co-octavinyl-polyhedral oligomeric silsesquioxane)', NULL, NULL),
-(18, 'CaF2', 'calcium fluoride based dental nanocomposite', NULL, NULL),
-(19, 'TiCrN', 'titanium chromium nitride nanocrystalline', NULL, NULL),
-(20, 'PLA', 'Poly(l-lactic acid)–TiO2 nanoparticle nanocomposite', NULL, NULL),
-(21, 'SiCN', 'Silicon carbide nitride', NULL, NULL),
-(22, 'HMNC', 'Hydrogel magnetite nanocomposite', NULL, NULL),
-(23, 'LDHs  MnO2-pillared Ni2+–Fe3+', 'MnO2-pillared Ni2+–Fe3+ layered double hydroxides nanocomposite', NULL, NULL),
-(24, 'PSBA-silica', 'poly(styrene-butylacrylate-acrylic acid)–silica', NULL, NULL),
-(25, 'PA/S', 'Polyacrylate/silica', NULL, NULL),
-(26, 'ZnS/hyperbranched polyester', '', NULL, NULL),
-(27, 'Microfibrils polyoxyethylene', '', NULL, NULL),
-(31, 'Nylon 1212/montmorillonite', 'Nylon 1212/montmorillonite', NULL, NULL),
-(28, 'PS VB16', 'polystyrene N,N-dimethyl-n-hexadecyl-(4-vinylbenzyl) ammonium chloride', NULL, NULL),
-(29, 'PEA/MMT', 'poly(o-ethoxyaniline)  and layered montmorillonite  clay', NULL, NULL),
-(30, 'MXD6/MLS', 'montmorillonite layered silicate (MLS)/poly(m-xylylene adipimide) (MXD6)', NULL, NULL),
-(32, 'PEVA/clay', 'Poly(ethylene-co-vinyl acetate)/clay', NULL, NULL),
-(33, 'PLA/MMT', 'poly(lactic acid) /montmorillonite', NULL, NULL),
-(34, 'silica/PHBHx', ' silica/poly(3-hydroxybutyrate-co-3-hydroxyhexanoate) ', NULL, NULL),
-(35, 'PET/', 'Poly(ethylene terephthalate) /silica', NULL, NULL),
-(36, 'CaCO3/PMMA', '', NULL, NULL),
-(37, 'PA6-BOE', 'polyamide-6-boehmite', NULL, NULL),
-(38, 'Ag2S/PHB', 'poly(3-hydroxybutyrate) (PHB) and silver sulfide/poly(3-hydroxybutyrate)', NULL, NULL),
-(39, 'HDPE/PEMA', 'high density polyethylene / polyethylene maleic anhydride', NULL, NULL),
-(40, 'PP/Si', 'polypropylene/silicon', NULL, NULL),
-(41, 'MWNTs/epoxy', 'multiwalled carbon nanotubes /epoxy', NULL, NULL),
-(42, 'PU/MMT', 'Polyurethane (PU)/montmorillonite (MMT)', NULL, NULL),
-(43, 'sPB/organoclay', 'Syndiotactic 1,2-polybutadiene/organoclay', NULL, NULL),
-(44, 'SWCNT/polyLF', 'single wall carbon nanotubes/Poly (l-Leucine-ran-l-Phenylalanine)', NULL, NULL),
-(45, 'HDPE/HDPE-g-MA and M2(HT)2 organoclay', 'high density polyethylene  and maleic anhydride-grafted high density polyethylene  ', NULL, NULL),
-(46, 'PHBV/OMMT', 'Poly(3-hydroxybutyrate-co-3-hydroxyvalerate)/organophilic montmorillonite', NULL, NULL),
-(47, 'PMMA/SiO2–CaO', 'poly(methyl methacrylate)/SiO2–CaO', NULL, NULL),
-(48, 'PMMA/Na+-MMT clay', 'Methyl methacrylate/ Na+-montmorillonite clay', NULL, NULL),
-(49, 'PE/Mg–Al LDH', 'polyethylene/Mg–Al layered double hydroxide', NULL, NULL),
-(50, 'PTT/MMT clay', 'Poly(trimethylene terephthalate)/ montmorillonites clay', NULL, NULL),
-(51, 'PLLA/MMT', 'poly( -lactic acid)/montmorillonite', NULL, NULL),
-(52, 'PHB/multiphase systems', 'poly(3-hydroxybutyrate)/multiphase systems', NULL, NULL),
-(53, 'Cu/Zn', '', NULL, NULL),
-(54, 'PVA–clay', 'PVA–clay nanocomposite hydrogel', NULL, NULL),
-(55, 'PA6/OMT', 'polyamide 6/organocla', NULL, NULL),
-(56, 'Au/CdS', '', NULL, NULL),
-(57, 'PEDOT/VS2', '', NULL, NULL),
-(58, 'Cu/PANi', 'copper/polyaniline', NULL, NULL),
-(59, 'NiO–Ta2O5 ', '', NULL, NULL),
-(60, 'Al₂O₃-TiO₂', 'спечённая корундовая керамика', NULL, NULL),
-(61, 'ВК 100-1', 'поликор', NULL, NULL);
+INSERT INTO `nano_l_composite` (`id`, `name`, `full_name`) VALUES
+(1, 'poly(vinyl alcohol)–clay', ''),
+(2, 'PBSA', 'poly[(butylene succinate)-co-adipate]'),
+(3, 'PVdF/LiClO4/TiO2', 'polymer - poly(vinylidene fluoride) (PVdF), lithium perchlorate (LiClO4) and TiO2 nanoparticles'),
+(5, 'TiAlSiN coatin', ''),
+(6, 'LDPE/Mg–Al LDH', 'LDPE/Mg–Al layered double hydroxide'),
+(7, 'St–BA/GO', 'Styrene–butyl acrylate copolymer /graphite oxide '),
+(8, 'PANI/Clino', 'Polyaniline / Clinoptilolite '),
+(9, 'SnO2–In2O3', 'gas-sensing nanocomposites of SnO2–In2O3 '),
+(10, 'PGO', 'Polystyrene intercalated graphite oxide'),
+(11, 'Si/SiO', ''),
+(12, 'Ag@TiO2', 'Ag@TiO2 core–shell nanocomposite nanowires'),
+(13, 'SnO2–hexaniobate layered', ''),
+(14, 'EO/LDH', 'The oligo(ethylene oxide) modified layered double hydroxide (LDH)'),
+(15, 'PEO/Laponite', 'poly(ethylene oxide)/Laponite'),
+(16, 'PU/OMMT', 'polyurethane/organically modified montmorillonite (OMMT) clay'),
+(17, 'PAS–POSS', 'poly(acetoxystyrenezhi-co-octavinyl-polyhedral oligomeric silsesquioxane)'),
+(18, 'CaF2', 'calcium fluoride based dental nanocomposite'),
+(19, 'TiCrN', 'titanium chromium nitride nanocrystalline'),
+(20, 'PLA', 'Poly(l-lactic acid)–TiO2 nanoparticle nanocomposite'),
+(21, 'SiCN', 'Silicon carbide nitride'),
+(22, 'HMNC', 'Hydrogel magnetite nanocomposite'),
+(23, 'LDHs  MnO2-pillared Ni2+–Fe3+', 'MnO2-pillared Ni2+–Fe3+ layered double hydroxides nanocomposite'),
+(24, 'PSBA-silica', 'poly(styrene-butylacrylate-acrylic acid)–silica'),
+(25, 'PA/S', 'Polyacrylate/silica'),
+(26, 'ZnS/hyperbranched polyester', ''),
+(27, 'Microfibrils polyoxyethylene', ''),
+(31, 'Nylon 1212/montmorillonite', 'Nylon 1212/montmorillonite'),
+(28, 'PS VB16', 'polystyrene N,N-dimethyl-n-hexadecyl-(4-vinylbenzyl) ammonium chloride'),
+(29, 'PEA/MMT', 'poly(o-ethoxyaniline)  and layered montmorillonite  clay'),
+(30, 'MXD6/MLS', 'montmorillonite layered silicate (MLS)/poly(m-xylylene adipimide) (MXD6)'),
+(32, 'PEVA/clay', 'Poly(ethylene-co-vinyl acetate)/clay'),
+(33, 'PLA/MMT', 'poly(lactic acid) /montmorillonite'),
+(34, 'silica/PHBHx', ' silica/poly(3-hydroxybutyrate-co-3-hydroxyhexanoate) '),
+(35, 'PET/', 'Poly(ethylene terephthalate) /silica'),
+(36, 'CaCO3/PMMA', ''),
+(37, 'PA6-BOE', 'polyamide-6-boehmite'),
+(38, 'Ag2S/PHB', 'poly(3-hydroxybutyrate) (PHB) and silver sulfide/poly(3-hydroxybutyrate)'),
+(39, 'HDPE/PEMA', 'high density polyethylene / polyethylene maleic anhydride'),
+(40, 'PP/Si', 'polypropylene/silicon'),
+(41, 'MWNTs/epoxy', 'multiwalled carbon nanotubes /epoxy'),
+(42, 'PU/MMT', 'Polyurethane (PU)/montmorillonite (MMT)'),
+(43, 'sPB/organoclay', 'Syndiotactic 1,2-polybutadiene/organoclay'),
+(44, 'SWCNT/polyLF', 'single wall carbon nanotubes/Poly (l-Leucine-ran-l-Phenylalanine)'),
+(45, 'HDPE/HDPE-g-MA and M2(HT)2 organoclay', 'high density polyethylene  and maleic anhydride-grafted high density polyethylene  '),
+(46, 'PHBV/OMMT', 'Poly(3-hydroxybutyrate-co-3-hydroxyvalerate)/organophilic montmorillonite'),
+(47, 'PMMA/SiO2–CaO', 'poly(methyl methacrylate)/SiO2–CaO'),
+(48, 'PMMA/Na+-MMT clay', 'Methyl methacrylate/ Na+-montmorillonite clay'),
+(49, 'PE/Mg–Al LDH', 'polyethylene/Mg–Al layered double hydroxide'),
+(50, 'PTT/MMT clay', 'Poly(trimethylene terephthalate)/ montmorillonites clay'),
+(51, 'PLLA/MMT', 'poly( -lactic acid)/montmorillonite'),
+(52, 'PHB/multiphase systems', 'poly(3-hydroxybutyrate)/multiphase systems'),
+(53, 'Cu/Zn', ''),
+(54, 'PVA–clay', 'PVA–clay nanocomposite hydrogel'),
+(55, 'PA6/OMT', 'polyamide 6/organocla'),
+(56, 'Au/CdS', ''),
+(57, 'PEDOT/VS2', ''),
+(58, 'Cu/PANi', 'copper/polyaniline'),
+(59, 'NiO–Ta2O5 ', ''),
+(60, 'Al₂O₃-TiO₂', 'спечённая корундовая керамика'),
+(61, 'ВК 100-1', 'поликор'),
+(62, 'ВК 100-2(КМ)', 'поликор'),
+(63, 'ВК 94-1(22ХС)', 'вакуум-плотная корундовая керамика 94-1(22ХС)');
 
 -- --------------------------------------------------------
 
@@ -6805,7 +6835,7 @@ INSERT INTO `nano_l_fill` (`FILL_ID`, `FILL_CATEGORY`, `FILL_NAME`, `FILL_DESC`,
 (63, 0, 'multiphase systems', '', ''),
 (64, 6, 'VS2', '', ''),
 (65, 2, 'NiO', '', ''),
-(66, 2, 'TiO2', 'оксид титана', 'Titan oxide'),
+(66, 2, 'TiO₂', 'оксид титана', 'Titan oxide'),
 (67, 2, 'MgO', 'оксид магния', 'MgO');
 
 -- --------------------------------------------------------
@@ -7159,7 +7189,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_questions` (
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`QUESTION_ID`),
   KEY `QUESTION_GROUP_ID` (`QUESTION_GROUP_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=244 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=245 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_questions`
@@ -7375,7 +7405,8 @@ INSERT INTO `nano_l_questions` (`QUESTION_ID`, `QUESTION_GROUP_ID`, `QUESTION_NA
 (240, 10, 'плотность', 'density', '', 1),
 (241, 9, 'линейный коэффициент теплового расширения', 'Linear thermal expansion coefficient', '', 1),
 (242, 10, 'предел прочности при изгибе', 'ultimate bending strength', '', 1),
-(243, 10, 'микротвёрдость', 'microhardness', '', 1);
+(243, 10, 'микротвёрдость', 'microhardness', '', 1),
+(244, 10, 'Ударная прочность', 'impact strength', '', 1);
 
 -- --------------------------------------------------------
 
@@ -7480,7 +7511,9 @@ CREATE TABLE IF NOT EXISTS `properties_view_old` (
 DROP VIEW IF EXISTS `target_properties`;
 CREATE TABLE IF NOT EXISTS `target_properties` (
 `MATRIX_NAME` varchar(255)
+,`name` varchar(255)
 ,`FILL_NAME` varchar(255)
+,`QUESTION_NAME` varchar(255)
 ,`QUESTION_NAME_ENG` varchar(255)
 ,`ANSWER_TEXT` text
 ,`ANSWER_NAME` text
@@ -7550,7 +7583,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `target_properties`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `target_properties`  AS  select `nlm`.`MATRIX_NAME` AS `MATRIX_NAME`,`nlf`.`FILL_NAME` AS `FILL_NAME`,`nlq`.`QUESTION_NAME_ENG` AS `QUESTION_NAME_ENG`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT`,`nla`.`ANSWER_NAME` AS `ANSWER_NAME` from ((((((`nano_l_questions` `nlq` join `nano_l_answers` `nla`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `nano_l_fill` `nlf`) join `category_matrix` `cm`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nlf`.`FILL_ID` = `nfd`.`FILL_ID`) and (`cm`.`id` = `nlm`.`MATRIX_CATEGORY`) and (`cm`.`name` = 'Керамика') and (`nfd`.`DATA_ID` <> 367)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `target_properties`  AS  select `nlm`.`MATRIX_NAME` AS `MATRIX_NAME`,`nlc`.`name` AS `name`,`nlf`.`FILL_NAME` AS `FILL_NAME`,`nlq`.`QUESTION_NAME` AS `QUESTION_NAME`,`nlq`.`QUESTION_NAME_ENG` AS `QUESTION_NAME_ENG`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT`,`nla`.`ANSWER_NAME` AS `ANSWER_NAME` from (((((((`nano_l_questions` `nlq` join `nano_l_answers` `nla`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `nano_l_fill` `nlf`) join `category_matrix` `cm`) join `nano_l_composite` `nlc`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nlf`.`FILL_ID` = `nfd`.`FILL_ID`) and (`cm`.`id` = `nlm`.`MATRIX_CATEGORY`) and (`cm`.`name` = 'Керамика') and (`nfd`.`DATA_ID` <> 367) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`)) ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

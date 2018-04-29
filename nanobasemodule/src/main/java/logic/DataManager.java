@@ -100,32 +100,47 @@ public class DataManager {
 
     public static CategoryDataset getDataset(String matrixName, String propertyName){
         final String DELIMITER = ";";
+        final String HYPHEN = "-";
         DefaultCategoryDataset dataset = null;
         try(Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery
-                    ("SELECT FILL_NAME, ANSWER_TEXT, ANSWER_NAME\n" +
+                    ("SELECT name, FILL_NAME, ANSWER_TEXT, ANSWER_NAME\n" +
                             "FROM target_properties\n" +
-                            "WHERE MATRIX_NAME = '" + matrixName + "'\n" +
+                            "WHERE MATRIX_NAME = '" + Converter.convertToDatabaseMatrixName(matrixName) + "'\n" +
                             "AND QUESTION_NAME_ENG = '" + propertyName + "'");
             if(resultSet.first()){
-                String value, measure, fillName;
+                String value, measure, fillName, compositeName;
                 dataset = new DefaultCategoryDataset();
                 do{
-                    fillName = resultSet.getString(1);
-                    value = resultSet.getString(2);
-                    measure = resultSet.getString(3);
+                    compositeName = resultSet.getString(1);
+                    fillName = resultSet.getString(2);
+                    value = resultSet.getString(3);
+                    measure = resultSet.getString(4);
                     if(value.contains(DELIMITER) && measure.contains(DELIMITER)){
                         String[] values = value.split(DELIMITER);
                         String[] conditions = measure.split(DELIMITER);
                         for (int i = 0; i < values.length; i++) {
                             dataset.addValue(Double.parseDouble(values[i]),
-                                    conditions[0] + ", " + conditions[i + 1],
-                                    fillName);
+                                    conditions[0] + "(" + conditions[i + 1] + ")",
+                                    compositeName + '(' + fillName + ')');
                         }
                     }
                     else {
-                        dataset.addValue(Double.parseDouble(value), measure, fillName);
+                        if(value.contains(HYPHEN)){
+                            String[] values = value.split(HYPHEN);
+                            dataset.addValue(Double.parseDouble(values[0]),
+                                    measure + "(Мин.)",
+                                    compositeName + '(' + fillName + ')');
+                            dataset.addValue(Double.parseDouble(values[1]),
+                                    measure + "(Макс.)",
+                                    compositeName + '(' + fillName + ')');
+                        }
+                        else {
+                            dataset.addValue(Double.parseDouble(value),
+                                    measure,
+                                    compositeName + '(' + fillName + ')');
+                        }
                     }
                 }while (resultSet.next());
             }
@@ -152,7 +167,7 @@ public class DataManager {
             boolean sdf = resultSet.isFirst();
                 matrixKinds = new Vector<>();
                 do{
-                    matrixKinds.add(resultSet.getString(1));
+                    matrixKinds.add(Converter.convertToLocalMatrixName(resultSet.getString(1)));
                 }while (resultSet.next());
             }
             statement.close();
@@ -168,15 +183,19 @@ public class DataManager {
         }
     }
 
-    public static Vector<String> getPropertiesList(String matrixName){
-        Vector<String> properties = null;
+    public static Properties getPropertiesList(String matrixName){
+        Properties properties = null;
         try(Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("CALL update_questions('" + matrixName + "')");
+            ResultSet resultSet = statement.executeQuery
+                    ("CALL update_questions('" + Converter.convertToDatabaseMatrixName(matrixName) + "')");
             if(resultSet.first()){
-                properties = new Vector<>();
+                properties = new Properties();
                 do{
-                    properties.add(resultSet.getString("QUESTION_NAME_ENG"));
+                    properties.addPair(
+                            resultSet.getString("QUESTION_NAME"),
+                            resultSet.getString("QUESTION_NAME_ENG")
+                    );
                 }while (resultSet.next());
             }
             statement.close();

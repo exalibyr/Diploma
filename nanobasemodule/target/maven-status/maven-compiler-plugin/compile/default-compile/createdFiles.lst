@@ -1,3 +1,4 @@
+logic\Converter.class
 userInterface\ValidationWindow$1.class
 userInterface\ResultTableColumnModel.class
 userInterface\ValidationWindowLayout.class
@@ -7,6 +8,7 @@ userInterface\ValidationWindow$3.class
 userInterface\GraphicalAnalyticalModule$1.class
 userInterface\VerticalLayout.class
 userInterface\UIBuilder.class
+logic\Properties.class
 userInterface\GraphicalAnalyticalModule$2.class
 userInterface\ResultTableModel.class
 userInterface\ValidationWindow.class
