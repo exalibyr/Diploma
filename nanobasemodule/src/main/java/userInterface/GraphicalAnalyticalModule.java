@@ -9,6 +9,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,13 +27,16 @@ public class GraphicalAnalyticalModule extends JFrame {
     private String selectedMatrix = "";
     private JComponent resultPanel = null;
     private JTable resultTable = null;
+    private RowSorter<TableModel> resultTableSorter = null;
     private JList<String> queryList;
+    private ChartFrame chartFrame = null;
+    private ChartPanel chartPanel = null;
 
     private Properties propertiesCache;
 
     public GraphicalAnalyticalModule(){
         setTitle("Графически-аналитический модуль");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 
         container = getContentPane();
@@ -83,15 +91,20 @@ public class GraphicalAnalyticalModule extends JFrame {
         ActionListener l = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(resultPanel != null){
-                    container.remove(resultPanel);
+                if(chartFrame == null){
+                    drawExampleBarChart();
+                    chartFrame = new ChartFrame(chartPanel);
                 }
-                JFreeChart chart = UIBuilder.createBarChartExample(DatasetBuilder.createCategoryDatasetExample());
-                resultPanel = new ChartPanel(chart);
-                ((ChartPanel) resultPanel).setMouseWheelEnabled(true);
-                ((ChartPanel) resultPanel).setFillZoomRectangle(true);
-                container.add(BorderLayout.CENTER, resultPanel);
-                revalidate();
+                else {
+                    if(chartFrame.isValid()){
+                        drawExampleBarChart();
+                        chartFrame.update(chartPanel);
+                    }
+                    else {
+                        drawExampleBarChart();
+                        chartFrame = new ChartFrame(chartPanel);
+                    }
+                }
             }
         };
         return l;
@@ -116,21 +129,20 @@ public class GraphicalAnalyticalModule extends JFrame {
         ActionListener l = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(resultPanel != null){
-                    container.remove(resultPanel);
+                if(chartFrame == null){
+                    drawBarChart();
+                    chartFrame = new ChartFrame(chartPanel);
                 }
-                String selectedPropertyEng = propertiesCache.getPropertiesEng().get(propertyComboBox.getSelectedIndex());
-                String selectedPropertyRus = (String) propertyComboBox.getSelectedItem();
-                JFreeChart chart = UIBuilder.createBarChart(
-                        DataManager.getDataset(selectedMatrix, selectedPropertyEng),
-                        selectedPropertyRus,
-                        selectedMatrix
-                        );
-                resultPanel = new ChartPanel(chart);
-                ((ChartPanel) resultPanel).setMouseWheelEnabled(true);
-                ((ChartPanel) resultPanel).setFillZoomRectangle(true);
-                container.add(BorderLayout.CENTER, resultPanel);
-                revalidate();
+                else {
+                    if(chartFrame.isValid()){
+                        drawBarChart();
+                        chartFrame.update(chartPanel);
+                    }
+                    else {
+                        drawBarChart();
+                        chartFrame = new ChartFrame(chartPanel);
+                    }
+                }
             }
         };
         return l;
@@ -145,6 +157,8 @@ public class GraphicalAnalyticalModule extends JFrame {
                 }
                 resultTable =  DataManager.getResultTable(Converter.convertToViewName(queryList.getSelectedValue()));
                 resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                resultTableSorter = new TableRowSorter<>(resultTable.getModel());
+                resultTable.setRowSorter(resultTableSorter);
                 resultPanel = new JScrollPane(resultTable,
                         ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -155,4 +169,23 @@ public class GraphicalAnalyticalModule extends JFrame {
         return l;
     }
 
+    private void drawBarChart(){
+        String selectedPropertyEng = propertiesCache.getPropertiesEng().get(propertyComboBox.getSelectedIndex());
+        String selectedPropertyRus = (String) propertyComboBox.getSelectedItem();
+        JFreeChart chart = UIBuilder.createBarChart(
+                DataManager.getDataset(selectedMatrix, selectedPropertyEng),
+                selectedPropertyRus,
+                selectedMatrix
+        );
+        chartPanel = new ChartPanel(chart);
+        chartPanel.setFillZoomRectangle(true);
+        chartPanel.setVerticalAxisTrace(true);
+    }
+
+    private void drawExampleBarChart(){
+        JFreeChart chart = UIBuilder.createBarChartExample(DatasetBuilder.createCategoryDatasetExample());
+        chartPanel = new ChartPanel(chart);
+        chartPanel.setFillZoomRectangle(true);
+        chartPanel.setVerticalAxisTrace(true);
+    }
 }

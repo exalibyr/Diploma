@@ -56,4 +56,8 @@ public class VerticalLayout implements LayoutManager {
         dimension.height = height;
         return dimension;
     }
+
+    public Dimension getDimension() {
+        return dimension;
+    }
 }

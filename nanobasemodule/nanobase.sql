@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 04 2018 г., 09:51
+-- Время создания: Апр 29 2018 г., 14:46
 -- Версия сервера: 5.7.19
 -- Версия PHP: 5.6.31
 
@@ -5351,14 +5351,14 @@ INSERT INTO `nano_f_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_LO_NUMBER`, `A
 (71, 28, NULL, '374; 315; 147;', 414, NULL),
 (242, 29, NULL, '650; 50', 414, NULL),
 (243, 30, NULL, '26', 414, NULL),
-(245, 1, NULL, '95-99.5', 423, NULL),
+(123, 2, NULL, '0.1-0.2', 415, NULL),
 (240, 23, NULL, '3.96', 415, NULL),
 (63, 30, NULL, '0.02', 415, NULL),
 (242, 31, NULL, '280', 415, NULL),
 (85, 34, NULL, '10.3', 415, NULL),
 (86, 9, NULL, '1', 415, NULL),
 (87, 36, NULL, '100000000000000', 415, NULL),
-(241, 3, NULL, '8', 423, NULL),
+(241, 37, NULL, '8.5', 415, NULL),
 (240, 23, NULL, '3.88', 416, NULL),
 (63, 30, NULL, '0.02', 416, NULL),
 (242, 31, NULL, '320', 416, NULL),
@@ -5369,7 +5369,7 @@ INSERT INTO `nano_f_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_LO_NUMBER`, `A
 (86, 8, NULL, '2', 415, NULL),
 (87, 36, NULL, '100000000000000', 416, NULL),
 (88, 7, NULL, '42', 416, NULL),
-(241, 37, NULL, '7.9', 416, NULL),
+(241, 37, NULL, '8.4', 416, NULL),
 (86, 9, NULL, '1', 416, NULL),
 (86, 8, NULL, '2', 416, NULL),
 (85, 35, NULL, '10.1', 416, NULL),
@@ -5380,69 +5380,7 @@ INSERT INTO `nano_f_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_LO_NUMBER`, `A
 (85, 35, NULL, '10.3', 417, NULL),
 (86, 8, NULL, '6', 417, NULL),
 (86, 9, NULL, '15', 417, NULL),
-(87, 36, NULL, '10000000000000', 417, NULL),
-(240, 23, NULL, '3.88', 418, NULL),
-(63, 30, NULL, '0.02', 418, NULL),
-(242, 31, NULL, '300', 418, NULL),
-(85, 34, NULL, '10.8', 418, NULL),
-(85, 35, NULL, '10.3', 418, NULL),
-(86, 8, NULL, '2', 418, NULL),
-(86, 9, NULL, '1', 418, NULL),
-(87, 36, NULL, '100000000000000', 418, NULL),
-(241, 37, NULL, '8.2', 418, NULL),
-(240, 23, NULL, '3.6', 419, NULL),
-(63, 30, NULL, '0.02', 419, NULL),
-(242, 31, NULL, '300', 419, NULL),
-(85, 34, NULL, '9.5', 419, NULL),
-(85, 35, NULL, '8.6', 419, NULL),
-(86, 8, NULL, '6', 419, NULL),
-(86, 9, NULL, '9', 419, NULL),
-(87, 36, NULL, '10000000000000', 419, NULL),
-(241, 37, NULL, '7.4', 419, NULL),
-(240, 23, NULL, '3.67', 420, NULL),
-(63, 30, NULL, '0.02', 420, NULL),
-(242, 31, NULL, '310', 420, NULL),
-(85, 34, NULL, '10', 420, NULL),
-(85, 35, NULL, '10.2', 420, NULL),
-(86, 8, NULL, '5', 420, NULL),
-(86, 9, NULL, '10', 420, NULL),
-(87, 36, NULL, '10000000000000', 420, NULL),
-(241, 37, NULL, '7.9', 420, NULL),
-(240, 23, NULL, '3.8', 421, NULL),
-(63, 30, NULL, '0.02', 421, NULL),
-(242, 31, NULL, '300', 421, NULL),
-(85, 34, NULL, '9', 421, NULL),
-(86, 8, NULL, '5', 421, NULL),
-(87, 36, NULL, '100000000000000', 421, NULL),
-(240, 23, NULL, '3.9', 422, NULL),
-(63, 30, NULL, '0.02', 422, NULL),
-(242, 31, NULL, '300', 422, NULL),
-(85, 34, NULL, '9.5', 422, NULL),
-(86, 8, NULL, '2', 422, NULL),
-(87, 36, NULL, '100000000000000', 422, NULL),
-(245, 1, NULL, '95-99.5', 418, NULL),
-(245, 1, NULL, '95-99.5', 419, NULL),
-(245, 1, NULL, '95-99.5', 420, NULL),
-(245, 1, NULL, '95-99.5', 421, NULL),
-(245, 1, NULL, '95-99.5', 422, NULL),
-(71, 32, NULL, '3.5', 415, NULL),
-(123, 3, NULL, '0.1-0.2', 415, NULL),
-(245, 1, NULL, '95-99.5', 424, NULL),
-(245, 1, NULL, '95-99.5', 425, NULL),
-(241, 1, NULL, '6', 424, NULL),
-(241, 2, NULL, '7', 424, NULL),
-(241, 3, NULL, '8', 424, NULL),
-(241, 1, NULL, '6', 425, NULL),
-(241, 2, NULL, '7', 425, NULL),
-(241, 37, NULL, '7.9', 425, NULL),
-(241, 1, NULL, '6.3', 418, NULL),
-(241, 2, NULL, '7.5', 418, NULL),
-(241, 1, NULL, '5.7', 419, NULL),
-(241, 2, NULL, '6.5', 419, NULL),
-(241, 1, NULL, '5.8', 420, NULL),
-(241, 2, NULL, '6.7', 420, NULL),
-(241, 2, NULL, '5.5', 421, NULL),
-(241, 2, NULL, '6.5', 422, NULL);
+(87, 36, NULL, '10000000000000', 417, NULL);
 
 -- --------------------------------------------------------
 
@@ -5462,7 +5400,7 @@ CREATE TABLE IF NOT EXISTS `nano_f_datum` (
   KEY `MATRIX_ID` (`MATRIX_ID`),
   KEY `FILL_ID` (`FILL_ID`),
   KEY `ARTICLE_ID` (`ARTICLE_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=426 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=418 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_f_datum`
@@ -5870,15 +5808,7 @@ INSERT INTO `nano_f_datum` (`DATA_ID`, `ARTICLE_ID`, `COMPOSITE_ID`, `MATRIX_ID`
 (414, 355, 60, 196, 66),
 (415, 356, 61, 196, 67),
 (416, 357, 62, 196, 67),
-(417, 357, 63, 196, 67),
-(418, 358, 64, 196, 67),
-(419, 358, 65, 196, 67),
-(420, 358, 66, 196, 67),
-(421, 358, 67, 196, 67),
-(422, 358, 68, 196, 67),
-(423, 358, 61, 196, 67),
-(424, 358, 62, 196, 67),
-(425, 358, 63, 196, 67);
+(417, 357, 63, 196, 67);
 
 -- --------------------------------------------------------
 
@@ -6335,12 +6265,7 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (53, 3, 2, 'Вт/(К•м)', 'W/(K•m)'),
 (88, 7, 2, 'кВ/мм', 'kV/mm'),
 (86, 9, 2, 'tgδ•10⁴, при 25°C и частоте 10¹⁰ Гц', 'tgδ•10⁴, at 25°C and frecuency 10¹⁰ Hz'),
-(85, 35, 2, 'при 25°C и частоте 10¹⁰ Гц', 'at 25°C and frequency 10¹⁰ Hz'),
-(245, 1, 6, '%', '%'),
-(123, 3, 6, '%', '%'),
-(241, 1, 2, 'α•10⁶ при 20-200°C, K⁻¹', 'α•10⁶ at 20-200°C, K⁻¹'),
-(241, 2, 2, 'α•10⁶ при 20-500°C, K⁻¹', 'α•10⁶ at 20-500°C, K⁻¹'),
-(241, 3, 2, 'α•10⁶ при 20-1000°C, K⁻¹', 'α•10⁶ at 20-1000°C, K⁻¹');
+(85, 35, 2, 'при 25°C и частоте 10¹⁰ Гц', 'at 25°C and frequency 10¹⁰ Hz');
 
 -- --------------------------------------------------------
 
@@ -6365,8 +6290,7 @@ INSERT INTO `nano_l_answers_types` (`ANSWER_TYPE_ID`, `ANSWER_TYPE_NAME`) VALUES
 (2, 'NUMBER'),
 (3, 'TEXT'),
 (4, 'UNIQUE_NUMBER'),
-(5, 'UNIQUE_TEXT'),
-(6, 'INTERVAL');
+(5, 'UNIQUE_TEXT');
 
 -- --------------------------------------------------------
 
@@ -6390,7 +6314,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_articles` (
   `FILE` text NOT NULL,
   PRIMARY KEY (`ARTICLE_ID`),
   KEY `COUNTRY_ID` (`COUNTRY_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=359 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=358 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_articles`
@@ -6739,8 +6663,7 @@ INSERT INTO `nano_l_articles` (`ARTICLE_ID`, `ARTICLE_NAME`, `YEAR_ID`, `JOURNAL
 (354, 'Structure and properties of nanocomposites with a poly(trimethylene terephthalate) matrix', 2008, 'European Polymer Journal', NULL, 0, '1686-1695', '44', 6, 'U. Gurmendia, J.I. Eguiazabala and J. Nazabal,', 4, '60.pdf'),
 (355, '4.2.1. Керамика на основе Al2O3', 2004, 'Техническая керамика. Учебное пособие ТПУ Томск.', NULL, 1, '30-36', '6', NULL, 'С.В.Матренин, А.И.Слосман', 7, 'mechanical_engineering.pdf'),
 (356, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники', 2016, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники: дисс., Москва', NULL, 1, '', '', NULL, 'Амелина О.Д.', 7, ''),
-(357, 'Вакуум-плотная корундовая керамика на основе ультрадисперсных порошков', 2010, 'НАНОИНДУСТРИЯ', NULL, 1, '40-41', '2', 5, 'Амелина O.Д., Нестеров C.', 7, 'article_1812_291.pdf'),
-(358, '[Электронный ресурс] / Материал URL: http://www.vaccer.ru/material', 2006, 'OOO «Вакуумная керамика»', NULL, 1, '', '1', NULL, 'OOO «Вакуумная керамика»', 7, '');
+(357, 'Вакуум-плотная корундовая керамика на основе ультрадисперсных порошков', 2010, 'НАНОИНДУСТРИЯ', NULL, 1, '40-41', '2', 5, 'Амелина O.Д., Нестеров C.', 7, 'article_1812_291.pdf');
 
 -- --------------------------------------------------------
 
@@ -6755,7 +6678,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_composite` (
   `full_name` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `un_name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_composite`
@@ -6822,13 +6745,8 @@ INSERT INTO `nano_l_composite` (`id`, `name`, `full_name`) VALUES
 (59, 'NiO–Ta2O5 ', ''),
 (60, 'Al₂O₃-TiO₂', 'спечённая корундовая керамика'),
 (61, 'ВК 100-1', 'поликор'),
-(62, 'ВК 100-2', 'КМ'),
-(63, 'ВК 94-1', '22ХС'),
-(64, 'ВК 98-1', 'сапфирит-16'),
-(65, 'ВК 94-2', 'М-7'),
-(66, 'ВК 95-1', 'ВГ-1У'),
-(67, 'ГР.795', 'ГБ-7'),
-(68, 'ГР.799', 'МК');
+(62, 'ВК 100-2(КМ)', 'поликор'),
+(63, 'ВК 94-1(22ХС)', 'вакуум-плотная корундовая керамика 94-1(22ХС)');
 
 -- --------------------------------------------------------
 
@@ -7271,7 +7189,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_questions` (
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`QUESTION_ID`),
   KEY `QUESTION_GROUP_ID` (`QUESTION_GROUP_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=246 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=245 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_questions`
@@ -7488,8 +7406,7 @@ INSERT INTO `nano_l_questions` (`QUESTION_ID`, `QUESTION_GROUP_ID`, `QUESTION_NA
 (241, 9, 'линейный коэффициент теплового расширения', 'Linear thermal expansion coefficient', '', 1),
 (242, 10, 'предел прочности при изгибе', 'ultimate bending strength', '', 1),
 (243, 10, 'микротвёрдость', 'microhardness', '', 1),
-(244, 10, 'Ударная прочность', 'impact strength', '', 1),
-(245, 7, 'Содержание матрицы в нанокомпозите', 'Matrix fraction of nanocomposite', '', 1);
+(244, 10, 'Ударная прочность', 'impact strength', '', 1);
 
 -- --------------------------------------------------------
 
@@ -7630,7 +7547,7 @@ INSERT INTO `users` (`id`, `login`, `password`) VALUES
 --
 DROP TABLE IF EXISTS `articles`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `articles`  AS  select `nlc`.`name` AS `name`,`nla`.`ARTICLE_NAME` AS `ARTICLE_NAME`,`nla`.`YEAR_ID` AS `YEAR_ID`,`nla`.`JOURNAL_NAME` AS `JOURNAL_NAME`,`nla`.`AUTHORS` AS `AUTHORS`,`nc`.`COUNTRY_NAME` AS `COUNTRY_NAME` from (((((`nano_f_datum` `nfd` join `nano_l_articles` `nla`) join `nano_l_composite` `nlc`) join `nano_countries` `nc`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) where ((`nla`.`ARTICLE_ID` = `nfd`.`ARTICLE_ID`) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nc`.`COUNTRY_ID` = `nla`.`COUNTRY_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`nfd`.`DATA_ID` <> 367) and (`cm`.`name` = 'Керамика')) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `articles`  AS  select `nlc`.`name` AS `name`,`nla`.`ARTICLE_NAME` AS `ARTICLE_NAME`,`nla`.`YEAR_ID` AS `YEAR_ID`,`nla`.`JOURNAL_NAME` AS `JOURNAL_NAME`,`nla`.`AUTHORS` AS `AUTHORS`,`nc`.`COUNTRY_NAME` AS `COUNTRY_NAME` from (((((`nano_f_datum` `nfd` join `nano_l_articles` `nla`) join `nano_l_composite` `nlc`) join `nano_countries` `nc`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) where ((`nla`.`ARTICLE_ID` = `nfd`.`ARTICLE_ID`) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nc`.`COUNTRY_ID` = `nla`.`COUNTRY_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`cm`.`name` = 'Керамика')) ;
 
 -- --------------------------------------------------------
 

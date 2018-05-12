@@ -14,7 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Vector;
 
-class UIBuilder {
+public class UIBuilder {
 
     static JList<String> buildQueryList(){
         Vector<String> queryListContent = new Vector<>();
@@ -29,7 +29,7 @@ class UIBuilder {
     static JFreeChart createBarChart(CategoryDataset dataset, String propertyName, String matrixName){
         JFreeChart chart = ChartFactory.createBarChart("График значений свойства - " + propertyName,
                 "Название нанокомпозита (наполнитель)",
-                "Значение свойства",
+                propertyName,
                 dataset);
         chart.addSubtitle(new TextTitle("Матрица - " + matrixName));
         chart.setBackgroundPaint(Color.GRAY);
@@ -46,7 +46,7 @@ class UIBuilder {
     static JFreeChart createBarChartExample(CategoryDataset dataset){
         JFreeChart chart = ChartFactory.createBarChart("График значений свойства",
                 "Название нанокомпозита (наполнитель)",
-                "Значение свойства",
+                "Значение свойства, Ед. изм.",
                 dataset);
         chart.addSubtitle(new TextTitle("Название матрицы"));
         chart.setBackgroundPaint(Color.GRAY);
@@ -54,9 +54,15 @@ class UIBuilder {
         CategoryPlot plot = chart.getCategoryPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        BarRenderer barRenderer = (BarRenderer) plot.getRenderer();
+//        BarRenderer barRenderer = (BarRenderer) plot.getRenderer();
         //barRenderer.setDrawBarOutline(true);
         //chart.getLegend().setFrame(BlockBorder.NONE);
         return chart;
+    }
+
+    public static JTable createResultTable(String[][] resultData, String[] headers){
+        JTable resultTable = new JTable(resultData, headers);
+        resultTable.setGridColor(Color.BLACK);
+        return resultTable;
     }
 }

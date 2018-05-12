@@ -3,7 +3,7 @@ package userInterface;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class ResultTableModel extends DefaultTableModel {
+public class ResultTableModel extends DefaultTableModel implements TableModel {
 
     private String[][] data;
 
