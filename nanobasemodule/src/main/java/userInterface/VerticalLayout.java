@@ -42,18 +42,17 @@ public class VerticalLayout implements LayoutManager {
     private Dimension calculateSize(Container container){
         Component[] components = container.getComponents();
         int maxWidth = 0, currentWidth;
-        for (int i = 0; i < components.length; i++) {
-            currentWidth = components[i].getWidth();
-            if(currentWidth > maxWidth){
-                maxWidth = currentWidth;
+        int height = 0;
+        Dimension prefSize;
+        for (int i = 0; i < components.length; i++){
+            prefSize = components[i].getPreferredSize();
+            height = height + 5 + prefSize.height;
+            if(prefSize.width > maxWidth){
+                maxWidth = prefSize.width;
             }
         }
-        dimension.width = maxWidth + 5;
-        int height = 0;
-        for (int i = 0; i < components.length; i++) {
-            height = height + 5 + components[i].getHeight();
-        }
-        dimension.height = height;
+        dimension.width = maxWidth + 10;
+        dimension.height = height + 10;
         return dimension;
     }
 

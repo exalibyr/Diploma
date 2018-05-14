@@ -13,6 +13,9 @@ public class Converter {
             case "Свойства кермических нанокомпозитов (старые)":{
                 return "properties_view_old";
             }
+            case "Область применения керамических нанокомпозитов":{
+                return "application_area";
+            }
             default: throw new RuntimeException();
         }
     }

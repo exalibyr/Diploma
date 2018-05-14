@@ -99,25 +99,24 @@ public class DataManager {
         try(Connection connection = DriverManager.getConnection(URL, LOGIN, PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery
-                    ("SELECT name, FILL_NAME, ANSWER_TEXT, ANSWER_NAME\n" +
+                    ("SELECT name, ANSWER_TEXT, ANSWER_NAME\n" +
                             "FROM target_properties\n" +
                             "WHERE MATRIX_NAME = '" + Converter.convertToDatabaseMatrixName(matrixName) + "'\n" +
                             "AND QUESTION_NAME_ENG = '" + propertyName + "'");
             if(resultSet.first()){
-                String value, measure, fillName, compositeName;
+                String value, measure, compositeName;
                 dataset = new DefaultCategoryDataset();
                 do{
                     compositeName = resultSet.getString(1);
-                    fillName = resultSet.getString(2);
-                    value = resultSet.getString(3);
-                    measure = resultSet.getString(4);
+                    value = resultSet.getString(2);
+                    measure = resultSet.getString(3);
                     if(value.contains(DELIMITER) && measure.contains(DELIMITER)){
                         String[] values = value.split(DELIMITER);
                         String[] conditions = measure.split(DELIMITER);
                         for (int i = 0; i < values.length; i++) {
                             dataset.addValue(Double.parseDouble(values[i]),
                                     conditions[0] + "(" + conditions[i + 1] + ")",
-                                    compositeName + '(' + fillName + ')');
+                                    compositeName);
                         }
                     }
                     else {
@@ -125,15 +124,15 @@ public class DataManager {
                             String[] values = value.split(HYPHEN);
                             dataset.addValue(Double.parseDouble(values[0]),
                                     measure + "(Мин.)",
-                                    compositeName + '(' + fillName + ')');
+                                    compositeName);
                             dataset.addValue(Double.parseDouble(values[1]),
                                     measure + "(Макс.)",
-                                    compositeName + '(' + fillName + ')');
+                                    compositeName);
                         }
                         else {
                             dataset.addValue(Double.parseDouble(value),
                                     measure,
-                                    compositeName + '(' + fillName + ')');
+                                    compositeName);
                         }
                     }
                 }while (resultSet.next());

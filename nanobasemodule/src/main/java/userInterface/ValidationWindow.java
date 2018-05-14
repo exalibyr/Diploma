@@ -19,7 +19,7 @@ public class ValidationWindow extends JDialog {
 
     public ValidationWindow(){
 
-        setTitle("Авторизация в базе данных");
+        setTitle("Авторизация");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModal(true);
         ValidationWindowLayout layout = new ValidationWindowLayout();
@@ -41,6 +41,7 @@ public class ValidationWindow extends JDialog {
         container.add(signInButton);
         container.add(loginLabel);
         container.add(passwordLabel);
+        container.setBackground(new Color(114, 209, 255, 50));
 
         locateWindow();
         pack();
@@ -243,7 +244,7 @@ public class ValidationWindow extends JDialog {
         Dimension windowSize = new Dimension(new Dimension(300, 145));
         Point point = new Point();
         point.x = (screenSize.width - windowSize.width) / 2;
-        point.y = (screenSize.height - windowSize.height) / 2;
+        point.y = (screenSize.height - windowSize.height) / 2 - 50;
         setLocation(point);
         setResizable(false);
         setPreferredSize(windowSize);

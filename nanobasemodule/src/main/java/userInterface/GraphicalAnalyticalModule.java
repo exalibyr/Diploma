@@ -9,15 +9,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
-import javax.swing.event.RowSorterEvent;
-import javax.swing.event.RowSorterListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 public class GraphicalAnalyticalModule extends JFrame {
 
@@ -25,20 +21,16 @@ public class GraphicalAnalyticalModule extends JFrame {
     private JComboBox<String> matrixComboBox;
     private JComboBox<String> propertyComboBox;
     private String selectedMatrix = "";
-    private JComponent resultPanel = null;
-    private JTable resultTable = null;
-    private RowSorter<TableModel> resultTableSorter = null;
     private JList<String> queryList;
     private ChartFrame chartFrame = null;
     private ChartPanel chartPanel = null;
-
+    private ResultTableFrame resultTableFrame = null;
+    private JScrollPane resultTablePanel = null;
     private Properties propertiesCache;
 
     public GraphicalAnalyticalModule(){
-        setTitle("Графически-аналитический модуль");
+        setTitle("Аналитический модуль");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-
         container = getContentPane();
 
         JLabel matrixLabel = new JLabel("Выбор матрицы");
@@ -52,38 +44,26 @@ public class GraphicalAnalyticalModule extends JFrame {
         JLabel dataLabel = new JLabel("Данные по нанокомпозитам");
         queryList = UIBuilder.buildQueryList();
         JButton getResultButton = new JButton("Получить данные");
-        JLabel compositeShapeLabelQuestion = new JLabel("Кристаллическая структура: ");
-        JLabel compositeShapeLabelAnswer = new JLabel();
-        JLabel delimiter = new JLabel("__________________________");
-        JLabel obtainingMethodLabelQuestion = new JLabel("Способ получения:");
-        JLabel obtainingMethodLabelAnswer = new JLabel("");
 
-
-        JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new VerticalLayout());
-        controlPanel.add(matrixLabel);
-        controlPanel.add(matrixComboBox);
-        controlPanel.add(propertyLabel);
-        controlPanel.add(propertyComboBox);
-        controlPanel.add(drawBarChartButton);
-        controlPanel.add(drawExampleChartButton);
-        controlPanel.add(dataLabel);
-        controlPanel.add(queryList);
-        controlPanel.add(getResultButton);
-        controlPanel.add(compositeShapeLabelQuestion);
-        controlPanel.add(compositeShapeLabelAnswer);
-        controlPanel.add(delimiter);
-        controlPanel.add(obtainingMethodLabelQuestion);
-        controlPanel.add(obtainingMethodLabelAnswer);
-        container.add(BorderLayout.WEST, controlPanel);
+        container.setLayout(new VerticalLayout());
+        container.setBackground(new Color(114, 209, 255, 50));
+        container.add(matrixLabel);
+        container.add(matrixComboBox);
+        container.add(propertyLabel);
+        container.add(propertyComboBox);
+        container.add(drawBarChartButton);
+        container.add(drawExampleChartButton);
+        container.add(dataLabel);
+        container.add(queryList);
+        container.add(getResultButton);
 
         matrixComboBox.addActionListener(matrixComboBoxActionListener());
         drawBarChartButton.addActionListener(chartButtonActionListener());
         getResultButton.addActionListener(getResultButtonActionListener());
         drawExampleChartButton.addActionListener(drawExampleBarChartActionListener());
 
+        locateWindow();
         setVisible(true);
-        validate();
         pack();
     }
 
@@ -93,16 +73,16 @@ public class GraphicalAnalyticalModule extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(chartFrame == null){
                     drawExampleBarChart();
-                    chartFrame = new ChartFrame(chartPanel);
+                    chartFrame = new ChartFrame(chartPanel, "Название свойства");
                 }
                 else {
                     if(chartFrame.isValid()){
                         drawExampleBarChart();
-                        chartFrame.update(chartPanel);
+                        chartFrame.update(chartPanel, "Название свойства");
                     }
                     else {
                         drawExampleBarChart();
-                        chartFrame = new ChartFrame(chartPanel);
+                        chartFrame = new ChartFrame(chartPanel, "Название свойства");
                     }
                 }
             }
@@ -131,16 +111,16 @@ public class GraphicalAnalyticalModule extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(chartFrame == null){
                     drawBarChart();
-                    chartFrame = new ChartFrame(chartPanel);
+                    chartFrame = new ChartFrame(chartPanel, (String) propertyComboBox.getSelectedItem());
                 }
                 else {
                     if(chartFrame.isValid()){
                         drawBarChart();
-                        chartFrame.update(chartPanel);
+                        chartFrame.update(chartPanel, (String) propertyComboBox.getSelectedItem());
                     }
                     else {
                         drawBarChart();
-                        chartFrame = new ChartFrame(chartPanel);
+                        chartFrame = new ChartFrame(chartPanel, (String) propertyComboBox.getSelectedItem());
                     }
                 }
             }
@@ -152,18 +132,25 @@ public class GraphicalAnalyticalModule extends JFrame {
         ActionListener l = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(resultPanel != null) {
-                    container.remove(resultPanel);
+                if(queryList.getSelectedIndex() < 0){
+                    return;
                 }
-                resultTable =  DataManager.getResultTable(Converter.convertToViewName(queryList.getSelectedValue()));
-                resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                resultTableSorter = new TableRowSorter<>(resultTable.getModel());
-                resultTable.setRowSorter(resultTableSorter);
-                resultPanel = new JScrollPane(resultTable,
-                        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-                        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-                container.add(BorderLayout.CENTER, resultPanel);
-                revalidate();
+                else {
+                    if(resultTablePanel == null) {
+                        drawResultTable();
+                        resultTableFrame = new ResultTableFrame(resultTablePanel, queryList.getSelectedValue());
+                    }
+                    else {
+                        if(resultTablePanel.isValid()){
+                            drawResultTable();
+                            resultTableFrame.update(resultTablePanel, queryList.getSelectedValue());
+                        }
+                        else {
+                            drawResultTable();
+                            resultTableFrame = new ResultTableFrame(resultTablePanel, queryList.getSelectedValue());
+                        }
+                    }
+                }
             }
         };
         return l;
@@ -187,5 +174,25 @@ public class GraphicalAnalyticalModule extends JFrame {
         chartPanel = new ChartPanel(chart);
         chartPanel.setFillZoomRectangle(true);
         chartPanel.setVerticalAxisTrace(true);
+    }
+
+    private void drawResultTable(){
+        JTable resultTable =  DataManager.getResultTable(Converter.convertToViewName(queryList.getSelectedValue()));
+        resultTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        RowSorter<TableModel> resultTableSorter = new TableRowSorter<>(resultTable.getModel());
+        resultTable.setRowSorter(resultTableSorter);
+        resultTablePanel = new JScrollPane(resultTable,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    }
+
+    private void locateWindow(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension windowSize = container.getPreferredSize();
+        Point point = new Point();
+        point.x = (screenSize.width - windowSize.width) / 2;
+        point.y = (screenSize.height - windowSize.height) / 2 - 50;
+        setLocation(point);
+        setResizable(false);
     }
 }

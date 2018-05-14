@@ -1,30 +1,28 @@
 package userInterface;
 
-import org.jfree.chart.ChartPanel;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class ChartFrame extends JFrame{
+public class ResultTableFrame extends JFrame{
 
-    private ChartPanel chartPanel = null;
+    private JScrollPane resultPanel = null;
     private Container container = getContentPane();
 
-    ChartFrame(ChartPanel chartPanel, String title){
+    public ResultTableFrame(JScrollPane panel, String title){
         setTitle(title);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.chartPanel = chartPanel;
-        container.add(this.chartPanel);
+        this.resultPanel = panel;
+        container.add(this.resultPanel);
         setAlwaysOnTop(true);
         locateWindow();
         setVisible(true);
         pack();
     }
 
-    public void update(ChartPanel chartPanel, String title){
-        container.remove(this.chartPanel);
-        this.chartPanel = chartPanel;
-        container.add(this.chartPanel);
+    public void update(JScrollPane panel, String title){
+        container.remove(this.resultPanel);
+        this.resultPanel = panel;
+        container.add(this.resultPanel);
         setTitle(title);
         locateWindow();
         revalidate();
@@ -34,9 +32,8 @@ public class ChartFrame extends JFrame{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension windowSize = container.getPreferredSize();
         Point point = new Point();
-        point.x = -5;
+        point.x = screenSize.width - windowSize.width - 10;
         point.y = 0;
         setLocation(point);
     }
-
 }

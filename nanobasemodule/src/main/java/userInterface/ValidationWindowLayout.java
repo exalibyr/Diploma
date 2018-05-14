@@ -8,7 +8,7 @@ public class ValidationWindowLayout implements LayoutManager{
     private static final int GAP = 10;
 
     private Dimension dimension = new Dimension();
-    private int firstBaseline, secondBaseline;
+//    private int firstBaseline, secondBaseline;
 
     private Component loginLabel = null;
     private Component passwordLabel = null;

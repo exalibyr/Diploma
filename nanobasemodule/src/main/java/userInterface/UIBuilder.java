@@ -21,6 +21,8 @@ public class UIBuilder {
         queryListContent.add("Статьи по керамическим нанокомпозитам");
         queryListContent.add("Свойства керамических нанокомпозитов");
         queryListContent.add("Свойства кермических нанокомпозитов (старые)");
+        queryListContent.add("Область применения керамических нанокомпозитов");
+        queryListContent.add("Способы получения кермических нанокомпозитов");
         JList<String> queryList = new JList<>(queryListContent);
         queryList.setAutoscrolls(true);
         return queryList;
@@ -65,4 +67,5 @@ public class UIBuilder {
         resultTable.setGridColor(Color.BLACK);
         return resultTable;
     }
+
 }

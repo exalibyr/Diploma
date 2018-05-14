@@ -16,6 +16,7 @@ userInterface\ValidationWindow.class
 logic\DataManager.class
 userInterface\GraphicalAnalyticalModule$3.class
 userInterface\ResultTableRowSorter.class
+userInterface\ResultTableFrame.class
 userInterface\ValidationWindow$2.class
 logic\MyDataset.class
 logic\Main.class
