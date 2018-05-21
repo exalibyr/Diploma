@@ -10,11 +10,14 @@ public class Converter {
             case "Статьи по керамическим нанокомпозитам":{
                 return "articles";
             }
-            case "Свойства кермических нанокомпозитов (старые)":{
-                return "properties_view_old";
-            }
+//            case "Свойства кермических нанокомпозитов (старые)":{
+//                return "properties_view_old";
+//            }
             case "Область применения керамических нанокомпозитов":{
                 return "application_area";
+            }
+            case "Способы получения керамических нанокомпозитов":{
+                return "synthesis_description";
             }
             default: throw new RuntimeException();
         }

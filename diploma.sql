@@ -7,9 +7,11 @@ ALTER TABLE nano_f_datum ADD FOREIGN KEY (FILL_ID) REFERENCES nano_l_fill(FILL_I
 ALTER TABLE nano_f_datum ADD FOREIGN KEY (ARTICLE_ID) REFERENCES nano_l_articles(ARTICLE_ID)	
 ALTER TABLE nano_l_articles ADD FOREIGN KEY (COUNTRY_ID) REFERENCES nano_countries(COUNTRY_ID)
 ALTER TABLE nano_l_matrix ADD FOREIGN KEY (MATRIX_CATEGORY) REFERENCES category_matrix(id)
+ALTER TABLE `nano_l_composite` ADD `matrix_fraction` TEXT AFTER `full_name`;
+ALTER TABLE `nano_l_composite` ADD `fill_fraction` TEXT AFTER `matrix_fraction`;
 
 CREATE VIEW articles AS
-SELECT nlc.name, nla.ARTICLE_NAME, nla.YEAR_ID, nla.JOURNAL_NAME, nla.AUTHORS, nc.COUNTRY_NAME
+SELECT nlc.name, nla.ARTICLE_NAME, nla.YEAR_ID, nla.JOURNAL_NAME, nla.PAGES, nla.AUTHORS, nc.COUNTRY_NAME, nla.FILE
 FROM nano_f_datum nfd, nano_l_articles nla, nano_l_composite nlc, nano_countries nc, nano_l_matrix nlm, category_matrix cm
 WHERE nla.ARTICLE_ID = nfd.ARTICLE_ID
 AND nlc.id = nfd.COMPOSITE_ID
@@ -58,13 +60,15 @@ CREATE PROCEDURE update_questions (matrixName varchar(255))
 BEGIN 
 	SELECT DISTINCT nlq.QUESTION_NAME, nlq.QUESTION_NAME_ENG 
 	FROM nano_l_questions nlq, nano_l_answers nla, nano_f_answers nfa, nano_f_datum nfd, nano_l_matrix nlm
-	WHERE nlq.QUESTION_ID = nla.QUESTION_ID AND nla.QUESTION_ID = nfa.QUESTION_ID
+	WHERE nlq.QUESTION_ID = nla.QUESTION_ID 
+    AND nla.QUESTION_ID = nfa.QUESTION_ID
 	AND nla.ANSWER_ID = nfa.ANSWER_ID
 	AND nfa.DATA_ID = nfd.DATA_ID
 	AND nfd.MATRIX_ID = nlm.MATRIX_ID
 	AND nlm.MATRIX_NAME = matrixName
     AND nlq.QUESTION_GROUP_ID <> 4
-    AND nlq.QUESTION_GROUP_ID <> 3;
+    AND nlq.QUESTION_GROUP_ID <> 3
+    AND nlq.QUESTION_GROUP_ID <> 15;
 END
 //
 
@@ -110,6 +114,20 @@ WHERE nlq.QUESTION_ID = nla.QUESTION_ID
     AND nfd.DATA_ID <> 367
     AND nlc.id = nfd.COMPOSITE_ID
     AND nlq.QUESTION_GROUP_ID = 4
+    
+CREATE VIEW Synthesis_description AS
+SELECT  nlc.name, nlq.QUESTION_NAME, nfa.ANSWER_TEXT
+FROM nano_l_questions nlq, nano_l_answers nla, nano_f_answers nfa, nano_f_datum nfd, nano_l_matrix nlm, category_matrix cm, nano_l_composite nlc
+WHERE nlq.QUESTION_ID = nla.QUESTION_ID
+	AND nla.ANSWER_ID = nfa.ANSWER_ID
+    AND nla.QUESTION_ID = nfa.QUESTION_ID
+	AND nfa.DATA_ID = nfd.DATA_ID
+	AND nfd.MATRIX_ID = nlm.MATRIX_ID
+    AND cm.id = nlm.MATRIX_CATEGORY
+    AND cm.name = 'Керамика'
+    AND nfd.DATA_ID <> 367
+    AND nlc.id = nfd.COMPOSITE_ID
+    AND (nlq.QUESTION_GROUP_ID = 3 OR nlq.QUESTION_GROUP_ID = 15)
     
     
 INSERT INTO nano_l_answers_types VALUES (6, 'INTERVAL')
@@ -324,3 +342,140 @@ INSERT into nano_f_answers VALUES (241, 1, NULL, '6', 425, NUll);
 INSERT into nano_f_answers VALUES (241, 2, NULL, '7', 425, NUll);
 INSERT into nano_f_answers VALUES (241, 37, NULL, '7.9', 425, NUll);
 __________________________________________________________________________________________________________________________________________________________________________________________
+
+INSERT INTO nano_l_articles VALUES 
+(359, 'Fracture toughness of alumina–zirconia composites', 2006, 'Ceramics International', NULL, 29, '249-255', '7', '32', 'Cesari F., Esposito L., Furgiuele F.M., MAletta C., Tucci A.', 7, 'cesari2006.pdf');
+
+INSERT INTO nano_l_fill VALUES (68, 2, 'ZrO2', 'Оксид циркония','Zinc oxide'); 
+INSERT INTO nano_l_matrix VALUES (197, 12, 'ZrO2', 'Оксид циркония','Zinc oxide');
+INSERT INTO nano_l_fill VALUES (69, 2, 'Al2O3', 'Оксид алюминия','Aluminum oxide');
+
+INSERT INTO nano_l_composite VALUES (69, 'TZ3Y20A', '8Z2A', '80', '20');
+INSERT into nano_f_datum VALUES (426, 359, 69, 197, 69);
+INSERT INTO nano_l_questions VALUES (246, 10, 'площадь поверхности', 'surface area', '', 1);/*площадь поверхности*/
+INSERT into nano_l_answers VALUES (246, 1, 2, 'м^2/г', 'm^2/g');
+INSERT INTO nano_f_answers VALUES (246, 1, NULL, '16', 426, Null);
+INSERT INTO nano_l_questions VALUES (247, 10, 'средний размер частиц матрицы', 'Average particles size of matrix', '', 1);/*средний размер частиц матррицы*/
+INSERT into nano_l_answers VALUES (247, 1, 2, 'мкм', 'μm');
+INSERT INTO nano_f_answers VALUES (247, 1, NULL, '0.1', 426, Null);
+INSERT INTO nano_l_questions VALUES (248, 10, 'средний размер частиц наполнителя', 'Average particles size of fill', '', 1);/*средний размер частиц наполнителя*/
+INSERT into nano_l_answers VALUES (248, 1, 2, 'мкм', 'μm');
+INSERT INTO nano_f_answers VALUES (248, 1, NULL, '0.3', 426, Null);
+INSERT into nano_f_answers VALUES (242, 31, NULL, '811', 426, null);/*предел прочности при изгибе*/
+INSERT INTO nano_l_questions VALUES (249, 10, 'Модуль Вейбулла', 'Weibull modulus', '', 1);/*Модуль Вейбулла*/
+INSERT into nano_l_answers VALUES (249, 1, 2, 'нет единиц измерения', 'without measure');
+INSERT INTO nano_f_answers VALUES (249, 1, NULL, '13.3', 426, Null);
+INSERT INTO nano_l_questions VALUES (250, 10, 'нормализованная прочность материала', 'normalised material strength', '', 1);/*нормализованная прочность материала*/
+INSERT into nano_l_answers VALUES (250, 1, 2, 'МПа', 'MPa');
+INSERT INTO nano_f_answers VALUES (250, 1, NULL, '831', 426, Null);
+INSERT INTO nano_l_questions VALUES (251, 10, 'Твердость по Виккерсу', 'Vickers hardness', '', 1);/*Твердость по Виккерсу*/
+INSERT into nano_l_answers VALUES (251, 1, 2, 'ГПа', 'GPa');
+INSERT INTO nano_f_answers VALUES (251, 1, NULL, '246', 426, Null);
+INSERT into nano_l_answers VALUES (71, 7, 10, 'ГПа', 'GPa');/*модуль упругости*/
+INSERT into nano_f_answers VALUES (71, 7, NULL, '14.3', 426, NUll);
+INSERT INTO nano_l_questions VALUES (252, 10, 'критический коэффициент интенсивности напряжений I моды деформаций', 'the critical stress intensity factor I of the deformation mode', '', 1);/*критический коэффициент интенсивности напряжений I моды деформаций*/
+INSERT into nano_l_answers VALUES (252, 1, 2, 'МПа*м^(1/2)', 'MPa*m^(1/2)');
+INSERT INTO nano_f_answers VALUES (252, 1, NULL, '5', 426, Null);
+INSERT INTO nano_f_answers VALUES (240, 23, NULL, '5.48', 426, Null);/*плoтность*/
+INSERT INTO nano_l_questions VALUES (253, 10, 'Средний размер зерна матрицы', 'Average grain size of matrix', '', 1);/*Средний размер зерна матрицы*/
+INSERT into nano_l_answers VALUES (253, 1, 2, 'мкм', 'μm');
+INSERT INTO nano_f_answers VALUES (253, 1, NULL, '0.6', 426, Null);
+INSERT INTO nano_l_questions VALUES (254, 10, 'Средний размер зерна наполнителя', 'Average grain size of fill', '', 1);/*Средний размер зерна наполнителя*/
+INSERT into nano_l_answers VALUES (254, 1, 2, 'мкм', 'μm');
+INSERT INTO nano_f_answers VALUES (254, 1, NULL, '0.68', 426, Null);
+INSERT INTO nano_l_answers VALUES (22, 4, 3, 'Название метода', 'Method name');/*способ получения нанокомпозита*/
+INSERT INTO nano_l_answers VALUES (159, 4, 3, 'Диапазон температур', 'Temperature range');
+INSERT INTO nano_l_answers VALUES (162, 4, 3, 'Краткое описание', 'Short description');
+INSERT INTO nano_f_answers VALUES (22, 4, NULL, 'Литьё под давлением', 426, Null);
+INSERT INTO nano_f_answers VALUES (159, 4, NULL, '1500-1600 °C', 426, Null);
+INSERT into nano_f_answers VALUES (162, 4, NULL, 'Метод литья под давлением. Сушка и спекание на воздухе при температурах от 1500 до 1600 °C, в зависимости от композиции порошка.', 426, null);
+
+
+INSERT INTO nano_l_composite VALUES (70, 'TZ3Y40A', '6Z4A', '60', '40');
+INSERT into nano_f_datum VALUES (427, 359, 70, 197, 69);
+INSERT INTO nano_f_answers VALUES (246, 1, NULL, '15', 427, Null);/*площадь поверхности*/
+INSERT INTO nano_f_answers VALUES (247, 1, NULL, '0.3', 427, Null);/*средний размер частиц матррицы*/
+INSERT INTO nano_f_answers VALUES (248, 1, NULL, '0.3', 427, Null);/*средний размер частиц наполнителя*/
+INSERT into nano_f_answers VALUES (242, 31, NULL, '912', 427, null);/*предел прочности при изгибе*/
+INSERT INTO nano_f_answers VALUES (249, 1, NULL, '7.3', 427, Null);/*Модуль Вейбулла*/
+INSERT INTO nano_f_answers VALUES (250, 1, NULL, '977', 427, Null);/*нормализованная прочность материала*/
+INSERT INTO nano_f_answers VALUES (251, 1, NULL, '285', 427, Null);/*Твердость по Виккерсу*/
+INSERT into nano_f_answers VALUES (71, 7, NULL, '15.1', 427, NUll);/*модуль упругости*/
+INSERT INTO nano_f_answers VALUES (252, 1, NULL, '5.2', 427, Null);/*критический коэффициент интенсивности напряжений I моды деформаций*/
+INSERT INTO nano_f_answers VALUES (240, 23, NULL, '5.02', 427, Null);/*плoтность*/
+INSERT INTO nano_f_answers VALUES (253, 1, NULL, '0.36', 427, Null);/*Средний размер зерна матрицы*/
+INSERT INTO nano_f_answers VALUES (254, 1, NULL, '0.29', 427, Null);/*Средний размер зерна наполнителя*/
+INSERT INTO nano_f_answers VALUES (22, 4, NULL, 'Литьё под давлением', 427, Null);/*способ получения нанокомпозита*/
+INSERT INTO nano_f_answers VALUES (159, 4, NULL, '1500-1600 °C', 427, Null);
+INSERT into nano_f_answers VALUES (162, 4, NULL, 'Метод литья под давлением. Сушка и спекание на воздухе при температурах от 1500 до 1600 °C, в зависимости от композиции порошка.', 427, null);
+
+
+INSERT INTO nano_l_composite VALUES (71, 'TZ3Y60A', '4Z6A', '60', '40');
+INSERT into nano_f_datum VALUES (428, 359, 71, 196, 68);
+INSERT INTO nano_f_answers VALUES (246, 1, NULL, '12', 428, Null);/*площадь поверхности*/
+INSERT INTO nano_f_answers VALUES (247, 1, NULL, '0.3', 428, Null);/*средний размер частиц матррицы*/
+INSERT INTO nano_f_answers VALUES (248, 1, NULL, '0.3', 428, Null);/*средний размер частиц наполнителя*/
+INSERT into nano_f_answers VALUES (242, 31, NULL, '834', 428, null);/*предел прочности при изгибе*/
+INSERT INTO nano_f_answers VALUES (249, 1, NULL, '11.4', 428, Null);/*Модуль Вейбулла*/
+INSERT INTO nano_f_answers VALUES (250, 1, NULL, '874', 428, Null);/*нормализованная прочность материала*/
+INSERT INTO nano_f_answers VALUES (251, 1, NULL, '316', 428, Null);/*Твердость по Виккерсу*/
+INSERT into nano_f_answers VALUES (71, 7, NULL, '16.4', 428, NUll);/*модуль упругости*/
+INSERT INTO nano_f_answers VALUES (252, 1, NULL, '3.6', 428, Null);/*критический коэффициент интенсивности напряжений I моды деформаций*/
+INSERT INTO nano_f_answers VALUES (240, 23, NULL, '4.6', 428, Null);/*плoтность*/
+INSERT INTO nano_f_answers VALUES (253, 1, NULL, '0.37', 428, Null);/*Средний размер зерна матрицы*/
+INSERT INTO nano_f_answers VALUES (254, 1, NULL, '0.25', 428, Null);/*Средний размер зерна наполнителя*/
+INSERT INTO nano_f_answers VALUES (22, 4, NULL, 'Литьё под давлением', 428, Null);/*способ получения нанокомпозита*/
+INSERT INTO nano_f_answers VALUES (159, 4, NULL, '1500-1600 °C', 428, Null);
+INSERT into nano_f_answers VALUES (162, 4, NULL, 'Метод литья под давлением. Сушка и спекание на воздухе при температурах от 1500 до 1600 °C, в зависимости от композиции порошка.', 428, null);
+
+
+INSERT INTO nano_l_composite VALUES (72, 'TZ3Y80A', '2Z8A', '80', '20');
+INSERT into nano_f_datum VALUES (429, 359, 72, 196, 68);
+INSERT INTO nano_f_answers VALUES (246, 1, NULL, '10', 429, Null);/*площадь поверхности*/
+INSERT INTO nano_f_answers VALUES (247, 1, NULL, '0.1', 429, Null);/*средний размер частиц матррицы*/
+INSERT INTO nano_f_answers VALUES (248, 1, NULL, '0.3', 429, Null);/*средний размер частиц наполнителя*/
+INSERT into nano_f_answers VALUES (242, 31, NULL, '717', 429, null);/*предел прочности при изгибе*/
+INSERT INTO nano_f_answers VALUES (249, 1, NULL, '7.7', 429, Null);/*Модуль Вейбулла*/
+INSERT INTO nano_f_answers VALUES (250, 1, NULL, '763', 429, Null);/*нормализованная прочность материала*/
+INSERT INTO nano_f_answers VALUES (251, 1, NULL, '348', 429, Null);/*Твердость по Виккерсу*/
+INSERT into nano_f_answers VALUES (71, 7, NULL, '17.8', 429, NUll);/*модуль упругости*/
+INSERT INTO nano_f_answers VALUES (252, 1, NULL, '4.1', 429, Null);/*критический коэффициент интенсивности напряжений I моды деформаций*/
+INSERT INTO nano_f_answers VALUES (240, 23, NULL, '4.27', 429, Null);/*плoтность*/
+INSERT INTO nano_f_answers VALUES (253, 1, NULL, '0.6', 429, Null);/*Средний размер зерна матрицы*/
+INSERT INTO nano_f_answers VALUES (254, 1, NULL, '0.25', 429, Null);/*Средний размер зерна наполнителя*/
+INSERT INTO nano_f_answers VALUES (22, 4, NULL, 'Литьё под давлением', 429, Null);/*способ получения нанокомпозита*/
+INSERT INTO nano_f_answers VALUES (159, 4, NULL, '1500-1600 °C', 429, Null);
+INSERT into nano_f_answers VALUES (162, 4, NULL, 'Метод литья под давлением. Сушка и спекание на воздухе при температурах от 1500 до 1600 °C, в зависимости от композиции порошка.', 429, null);
+
+
+INSERT INTO nano_l_fill VALUES (70, 14, 'нет наполнителя', 'без наполнителя', 'without fill')
+INSERT INTO nano_l_composite VALUES (73, 'SM8', 'Baikowski, F', '100', '0');
+INSERT into nano_f_datum VALUES (430, 359, 73, 196, 70);
+INSERT INTO nano_f_answers VALUES (246, 1, NULL, '10', 430, Null);/*площадь поверхности*/
+INSERT INTO nano_f_answers VALUES (247, 1, NULL, '0.2', 430, Null);/*средний размер частиц матррицы*/
+INSERT INTO nano_f_answers VALUES (248, 1, NULL, '0', 430, Null);/*средний размер частиц наполнителя*/
+INSERT into nano_f_answers VALUES (242, 31, NULL, '436', 430, null);/*предел прочности при изгибе*/
+INSERT INTO nano_f_answers VALUES (249, 1, NULL, '9.7', 430, Null);/*Модуль Вейбулла*/
+INSERT INTO nano_f_answers VALUES (250, 1, NULL, '460', 430, Null);/*нормализованная прочность материала*/
+INSERT INTO nano_f_answers VALUES (251, 1, NULL, '356', 430, Null);/*Твердость по Виккерсу*/
+INSERT into nano_f_answers VALUES (71, 7, NULL, '18.3', 430, NUll);/*модуль упругости*/
+INSERT INTO nano_f_answers VALUES (252, 1, NULL, '4.2', 430, Null);/*критический коэффициент интенсивности напряжений I моды деформаций*/
+INSERT INTO nano_f_answers VALUES (240, 23, NULL, '3.95', 430, Null);/*плoтность*/
+INSERT INTO nano_f_answers VALUES (253, 1, NULL, '3.4', 430, Null);/*Средний размер зерна матрицы*/
+INSERT INTO nano_f_answers VALUES (254, 1, NULL, '0', 430, Null);/*Средний размер зерна наполнителя*/
+
+
+INSERT INTO nano_l_composite VALUES (74, 'TZ3YS', 'TZ3YS—Tosoh Co., J, 3 mol% Y2O3', '100', '0');
+INSERT into nano_f_datum VALUES (431, 359, 74, 197, 70);
+INSERT INTO nano_f_answers VALUES (246, 1, NULL, '7', 431, Null);/*площадь поверхности*/
+INSERT INTO nano_f_answers VALUES (247, 1, NULL, '0.2', 431, Null);/*средний размер частиц матррицы*/
+INSERT INTO nano_f_answers VALUES (248, 1, NULL, '0', 431, Null);/*средний размер частиц наполнителя*/
+INSERT into nano_f_answers VALUES (242, 31, NULL, '766', 431, null);/*предел прочности при изгибе*/
+INSERT INTO nano_f_answers VALUES (249, 1, NULL, '11.7', 431, Null);/*Модуль Вейбулла*/
+INSERT INTO nano_f_answers VALUES (250, 1, NULL, '810', 431, Null);/*нормализованная прочность материала*/
+INSERT INTO nano_f_answers VALUES (251, 1, NULL, '205', 431, Null);/*Твердость по Виккерсу*/
+INSERT into nano_f_answers VALUES (71, 7, NULL, '13.3', 431, NUll);/*модуль упругости*/
+INSERT INTO nano_f_answers VALUES (252, 1, NULL, '4.3', 431, Null);/*критический коэффициент интенсивности напряжений I моды деформаций*/
+INSERT INTO nano_f_answers VALUES (240, 23, NULL, '6.05', 431, Null);/*плoтность*/
+INSERT INTO nano_f_answers VALUES (253, 1, NULL, '0.74', 431, Null);/*Средний размер зерна матрицы*/
+INSERT INTO nano_f_answers VALUES (254, 1, NULL, '0', 431, Null);/*Средний размер зерна наполнителя*/

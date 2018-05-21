@@ -20,5 +20,4 @@ userInterface\ResultTableFrame.class
 userInterface\ValidationWindow$2.class
 logic\MyDataset.class
 logic\Main.class
-userInterface\GraphicalAnalyticalModule$4.class
 userInterface\GraphicalAnalyticalModule.class

@@ -17,9 +17,12 @@ import java.awt.event.ActionListener;
 
 public class GraphicalAnalyticalModule extends JFrame {
 
+    private static final Color BACKGROUND = new Color(114, 209, 255, 50);
+
     private Container container;
     private JComboBox<String> matrixComboBox;
     private JComboBox<String> propertyComboBox;
+    private JPanel propertyComboBoxPanel;
     private String selectedMatrix = "";
     private JList<String> queryList;
     private ChartFrame chartFrame = null;
@@ -32,63 +35,66 @@ public class GraphicalAnalyticalModule extends JFrame {
         setTitle("Аналитический модуль");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         container = getContentPane();
-
         JLabel matrixLabel = new JLabel("Выбор матрицы");
+        JLabel propertyLabel = new JLabel("Выбор свойства");
         matrixComboBox = new JComboBox<>(DataManager.getMatrixKinds());
         selectedMatrix = (String) matrixComboBox.getSelectedItem();
-        JLabel propertyLabel = new JLabel("Выбор свойства");
         propertiesCache = DataManager.getPropertiesList(selectedMatrix);
+        propertyComboBoxPanel = new JPanel();
+        propertyComboBoxPanel.setBackground(BACKGROUND);
         propertyComboBox = new JComboBox<>(propertiesCache.getPropertiesRus());
-        JButton drawBarChartButton = new JButton("Построить диаграмму");
-        JButton drawExampleChartButton = new JButton("Пример диаграммы");
+        propertyComboBoxPanel.add(propertyComboBox);
+        JButton drawBarChartButton = new JButton("Построить гистограмму");
+//        JButton drawExampleChartButton = new JButton("Пример диаграммы");
         JLabel dataLabel = new JLabel("Данные по нанокомпозитам");
         queryList = UIBuilder.buildQueryList();
-        JButton getResultButton = new JButton("Получить данные");
+        JButton getResultButton = new JButton("Выполнить запрос");
 
         container.setLayout(new VerticalLayout());
-        container.setBackground(new Color(114, 209, 255, 50));
+        container.setBackground(BACKGROUND);
+//        container.add(drawExampleChartButton);
         container.add(matrixLabel);
         container.add(matrixComboBox);
         container.add(propertyLabel);
-        container.add(propertyComboBox);
+        container.add(propertyComboBoxPanel);
         container.add(drawBarChartButton);
-        container.add(drawExampleChartButton);
         container.add(dataLabel);
         container.add(queryList);
         container.add(getResultButton);
+//        container.add(graphicalAnalisysPanel);
 
         matrixComboBox.addActionListener(matrixComboBoxActionListener());
         drawBarChartButton.addActionListener(chartButtonActionListener());
         getResultButton.addActionListener(getResultButtonActionListener());
-        drawExampleChartButton.addActionListener(drawExampleBarChartActionListener());
+//        drawExampleChartButton.addActionListener(drawExampleBarChartActionListener());
 
         locateWindow();
         setVisible(true);
         pack();
     }
 
-    private ActionListener drawExampleBarChartActionListener(){
-        ActionListener l = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(chartFrame == null){
-                    drawExampleBarChart();
-                    chartFrame = new ChartFrame(chartPanel, "Название свойства");
-                }
-                else {
-                    if(chartFrame.isValid()){
-                        drawExampleBarChart();
-                        chartFrame.update(chartPanel, "Название свойства");
-                    }
-                    else {
-                        drawExampleBarChart();
-                        chartFrame = new ChartFrame(chartPanel, "Название свойства");
-                    }
-                }
-            }
-        };
-        return l;
-    }
+//    private ActionListener drawExampleBarChartActionListener(){
+//        ActionListener l = new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if(chartFrame == null){
+//                    drawExampleBarChart();
+//                    chartFrame = new ChartFrame(chartPanel, "Название свойства");
+//                }
+//                else {
+//                    if(chartFrame.isValid()){
+//                        drawExampleBarChart();
+//                        chartFrame.update(chartPanel, "Название свойства");
+//                    }
+//                    else {
+//                        drawExampleBarChart();
+//                        chartFrame = new ChartFrame(chartPanel, "Название свойства");
+//                    }
+//                }
+//            }
+//        };
+//        return l;
+//    }
 
     private ActionListener matrixComboBoxActionListener(){
         ActionListener l = new ActionListener() {
@@ -97,8 +103,13 @@ public class GraphicalAnalyticalModule extends JFrame {
                 String matrix = (String) matrixComboBox.getSelectedItem();
                 if(!matrix.equals(selectedMatrix)){
                     propertyComboBox.removeAllItems();
+                    propertyComboBoxPanel.remove(propertyComboBox);
                     propertiesCache = DataManager.getPropertiesList(matrix);
-                    propertyComboBox = new JComboBox<>(propertiesCache.getPropertiesRus());
+                    propertyComboBox.setModel(new DefaultComboBoxModel<>(propertiesCache.getPropertiesRus()));
+                    propertyComboBoxPanel.add(propertyComboBox);
+//                    propertyComboBox = new JComboBox<>(propertiesCache.getPropertiesRus());
+                    selectedMatrix = matrix;
+
                 }
             }
         };
@@ -166,15 +177,14 @@ public class GraphicalAnalyticalModule extends JFrame {
         );
         chartPanel = new ChartPanel(chart);
         chartPanel.setFillZoomRectangle(true);
-        chartPanel.setVerticalAxisTrace(true);
     }
 
-    private void drawExampleBarChart(){
-        JFreeChart chart = UIBuilder.createBarChartExample(DatasetBuilder.createCategoryDatasetExample());
-        chartPanel = new ChartPanel(chart);
-        chartPanel.setFillZoomRectangle(true);
-        chartPanel.setVerticalAxisTrace(true);
-    }
+//    private void drawExampleBarChart(){
+//        JFreeChart chart = UIBuilder.createBarChartExample(DatasetBuilder.createCategoryDatasetExample());
+//        chartPanel = new ChartPanel(chart);
+//        chartPanel.setFillZoomRectangle(true);
+//        chartPanel.setVerticalAxisTrace(true);
+//    }
 
     private void drawResultTable(){
         JTable resultTable =  DataManager.getResultTable(Converter.convertToViewName(queryList.getSelectedValue()));
