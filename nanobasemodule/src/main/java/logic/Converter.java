@@ -2,6 +2,7 @@ package logic;
 
 public class Converter {
 
+    //метод конвертирует название запроса в приложении в имя представления в БД
     public static String convertToViewName(String viewNameRussian){
         switch (viewNameRussian){
             case "Свойства керамических нанокомпозитов":{
@@ -10,9 +11,6 @@ public class Converter {
             case "Статьи по керамическим нанокомпозитам":{
                 return "articles";
             }
-//            case "Свойства кермических нанокомпозитов (старые)":{
-//                return "properties_view_old";
-//            }
             case "Область применения керамических нанокомпозитов":{
                 return "application_area";
             }
@@ -23,14 +21,29 @@ public class Converter {
         }
     }
 
-//    public static String convertToLocalFillName(String databaseFillName){
-//        return convertToLocalMatrixName(databaseFillName);
-//    }
+    //метод заменяет запятую на точку в числе для возможности его интерпретации
+    public static String convertToDoubleParsable(String doubleNumber){
+        StringBuilder doubleParsable = new StringBuilder();
+        char symbol;
+        for (int i = 0; i < doubleNumber.length(); i++) {
+            symbol = doubleNumber.charAt(i);
+            if(symbol == ','){
+                doubleParsable.append('.');
+            }
+            else {
+                doubleParsable.append(symbol);
+            }
+        }
+        return doubleParsable.toString();
+    }
 
+    //метод конвертирует химическую формулу из формы для БД в форму для отображения
     public static String convertToLocalMatrixName(String databaseMatrixName){
         StringBuilder localMatrixName = new StringBuilder();
+        char symbol;
         for (int i = 0; i < databaseMatrixName.length(); i++) {
-            switch (databaseMatrixName.charAt(i)){
+            symbol = databaseMatrixName.charAt(i);
+            switch (symbol){
                 case '1':{
                     localMatrixName.append('₁');
                     break;
@@ -48,7 +61,7 @@ public class Converter {
                     break;
                 }
                 default: {
-                    localMatrixName.append(databaseMatrixName.charAt(i));
+                    localMatrixName.append(symbol);
                     break;
                 }
             }
@@ -56,6 +69,7 @@ public class Converter {
         return localMatrixName.toString();
     }
 
+    //метод конвертирует химическую формулу из формы для отображения в форму для БД
     public static String convertToDatabaseMatrixName(String localMatrixName){
         StringBuilder databaseMatrixName = new StringBuilder();
         for (int i = 0; i < localMatrixName.length(); i++) {
@@ -84,4 +98,6 @@ public class Converter {
         }
         return databaseMatrixName.toString();
     }
+
+
 }

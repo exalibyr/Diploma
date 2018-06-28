@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 24 2018 г., 00:48
+-- Время создания: Июн 28 2018 г., 20:55
 -- Версия сервера: 5.7.19
 -- Версия PHP: 5.6.31
 
@@ -65,9 +65,10 @@ DELIMITER ;
 --
 DROP VIEW IF EXISTS `application_area`;
 CREATE TABLE IF NOT EXISTS `application_area` (
-`name` varchar(255)
-,`QUESTION_NAME` varchar(255)
-,`ANSWER_TEXT` text
+`КОМПОЗИТ` varchar(255)
+,`МАТРИЦА` varchar(255)
+,`НАПОЛНИТЕЛЬ` varchar(255)
+,`ОБЛАСТЬ ПРИМЕНЕНИЯ` text
 );
 
 -- --------------------------------------------------------
@@ -78,14 +79,14 @@ CREATE TABLE IF NOT EXISTS `application_area` (
 --
 DROP VIEW IF EXISTS `articles`;
 CREATE TABLE IF NOT EXISTS `articles` (
-`name` varchar(255)
-,`ARTICLE_NAME` text
-,`YEAR_ID` int(5)
-,`JOURNAL_NAME` varchar(255)
-,`PAGES` varchar(255)
-,`AUTHORS` text
-,`COUNTRY_NAME` varchar(255)
-,`FILE` text
+`КОМПОЗИТ` varchar(255)
+,`СТАТЬЯ` text
+,`ГОД ИЗДАНИЯ` int(5)
+,`ЖУРНАЛ` varchar(255)
+,`СТРАНИЦЫ` varchar(255)
+,`АВТОРЫ` text
+,`СТРАНА` varchar(255)
+,`ИСТОЧНИК` text
 );
 
 -- --------------------------------------------------------
@@ -5560,7 +5561,160 @@ INSERT INTO `nano_f_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_LO_NUMBER`, `A
 (162, 4, NULL, 'Метод литья под давлением. Сушка и спекание на воздухе при температурах от 1500 до 1600 °C, в зависимости от композиции порошка.', 428, NULL),
 (22, 4, NULL, 'Литьё под давлением', 429, NULL),
 (159, 4, NULL, '1500-1600 °C', 429, NULL),
-(162, 4, NULL, 'Метод литья под давлением. Сушка и спекание на воздухе при температурах от 1500 до 1600 °C, в зависимости от композиции порошка.', 429, NULL);
+(162, 4, NULL, 'Метод литья под давлением. Сушка и спекание на воздухе при температурах от 1500 до 1600 °C, в зависимости от композиции порошка.', 429, NULL),
+(242, 31, NULL, '350-450', 432, NULL),
+(255, 1, NULL, '200', 432, NULL),
+(240, 23, NULL, '3.12-3.17', 432, NULL),
+(71, 7, NULL, '390 - 420', 432, NULL),
+(251, 1, NULL, '23 - 28', 432, NULL),
+(256, 1, NULL, '3.0 - 4.0', 432, NULL),
+(53, 3, NULL, '90 - 130', 432, NULL),
+(241, 4, NULL, '4.0 - 4.5', 432, NULL);
+INSERT INTO `nano_f_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_LO_NUMBER`, `ANSWER_TEXT`, `DATA_ID`, `ANSWER_HI_NUMBER`) VALUES
+(22, 4, NULL, 'Метод свободного спекания в твёрдой фазе', 432, NULL),
+(25, 4, NULL, 'осевые и радиальные подшипники скольжения', 432, NULL),
+(25, 5, NULL, 'торцевые уплотнения различных типов насосов для нефтегазодобывающей и химической промышленности', 432, NULL),
+(25, 6, NULL, 'производство запорной арматуры', 432, NULL),
+(25, 7, NULL, 'проихводство износостойкой технологической оснастке (сопла, фильеры и др)', 432, NULL),
+(25, 8, NULL, 'использование в изделиях, работающих в агрессивных жидкостях с pH от 0 до 14', 432, NULL),
+(240, 23, NULL, '3.21 - 3.25', 433, NULL),
+(255, 1, NULL, '10', 433, NULL),
+(242, 31, NULL, '500 - 550', 433, NULL),
+(71, 7, NULL, '400 - 430', 433, NULL),
+(251, 1, NULL, '22 - 25', 433, NULL),
+(256, 1, NULL, '4.0 - 5.0', 433, NULL),
+(53, 3, NULL, '70 - 90', 433, NULL),
+(241, 4, NULL, '5.0 - 5.5', 433, NULL),
+(240, 23, NULL, '2,80 - 2,85', 434, NULL),
+(71, 7, NULL, '450 - 480', 434, NULL),
+(242, 31, NULL, '350 - 450', 434, NULL),
+(251, 1, NULL, '38 - 40', 434, NULL),
+(240, 23, NULL, '4,85 - 4,89', 435, NULL),
+(71, 7, NULL, '470 - 500', 435, NULL),
+(242, 31, NULL, '500 - 600', 435, NULL),
+(251, 1, NULL, '22 - 24', 435, NULL),
+(22, 4, NULL, 'Метод свободного спекания в жидкой фазе', 433, NULL),
+(25, 4, NULL, 'осевые и радиальные подшипники скольжения', 433, NULL),
+(25, 5, NULL, 'торцевые уплотнения различных типов насосов для нефтегазодобывающей и химической промышленности', 433, NULL),
+(25, 6, NULL, 'производство запорной арматуры', 433, NULL),
+(25, 7, NULL, 'проихводство износостойкой технологической оснастке (сопла, фильеры и др)', 433, NULL),
+(25, 8, NULL, 'использование в изделиях, работающих в агрессивных жидкостях с pH от 0 до 14', 433, NULL),
+(240, 23, NULL, '3,05 - 3,11', 436, NULL),
+(255, 1, NULL, '70', 436, NULL),
+(242, 31, NULL, '330 - 450', 436, NULL),
+(71, 7, NULL, '380 - 410', 436, NULL),
+(257, 1, NULL, '25 - 30', 436, NULL),
+(256, 1, NULL, '3,50 - 4,50', 436, NULL),
+(53, 33, NULL, '140 - 180', 436, NULL),
+(241, 4, NULL, '3 - 4', 436, NULL),
+(240, 23, NULL, '3,00 - 3,04', 437, NULL),
+(255, 1, NULL, '70', 437, NULL),
+(242, 31, NULL, '240 - 320', 437, NULL),
+(71, 7, NULL, '360 - 400', 437, NULL),
+(257, 1, NULL, '25 - 30', 437, NULL),
+(256, 1, NULL, '3,00 - 4,00', 437, NULL),
+(53, 33, NULL, '100 - 120', 437, NULL),
+(241, 4, NULL, '3 - 4', 437, NULL),
+(22, 4, NULL, 'Метод реакционного спекания', 436, NULL),
+(25, 4, NULL, 'применяют в парах трения осевых и радиальных подшипников скольжения погружных центробежных и роторно-вихревых насосов и герметичных насосов', 436, NULL),
+(25, 5, NULL, 'применяют в торцевых уплотнениях насосов', 436, NULL),
+(25, 6, NULL, 'производство запорной арматуры', 436, NULL),
+(25, 7, NULL, 'применяют в разнообразных износостойких изделиях', 436, NULL),
+(22, 4, NULL, 'Метод реакционного спекания', 437, NULL),
+(25, 4, NULL, 'применяют в парах трения осевых и радиальных подшипников скольжения погружных центробежных и роторно-вихревых насосов и герметичных насосов', 437, NULL),
+(25, 5, NULL, 'применяют в торцевых уплотнениях насосов', 437, NULL),
+(25, 6, NULL, 'производство запорной арматуры', 437, NULL),
+(25, 7, NULL, 'применяют в разнообразных износостойких изделиях', 437, NULL),
+(25, 4, NULL, 'применяется для защиты от агрессивных воздействий абразивных сред', 435, NULL),
+(25, 5, NULL, 'применяется для защиты от химически активных сред', 435, NULL),
+(25, 6, NULL, 'применяется для защиты от ионизирующих излучений', 435, NULL),
+(25, 7, NULL, 'применяется для защиты от воздействия высоких температур', 435, NULL),
+(25, 8, NULL, 'применяется для защиты от ударных воздействий', 435, NULL),
+(25, 4, NULL, 'применяется для защиты от агрессивных воздействий абразивных сред', 438, NULL),
+(25, 5, NULL, 'применяется для защиты от химически активных сред', 438, NULL),
+(25, 6, NULL, 'применяется для защиты от ионизирующих излучений', 438, NULL),
+(25, 7, NULL, 'применяется для защиты от воздействия высоких температур', 438, NULL),
+(25, 8, NULL, 'применяется для защиты от ударных воздействий', 438, NULL),
+(25, 4, NULL, 'применяется для защиты от агрессивных воздействий абразивных сред', 439, NULL),
+(25, 5, NULL, 'применяется для защиты от химически активных сред', 439, NULL),
+(25, 6, NULL, 'применяется для защиты от ионизирующих излучений', 439, NULL),
+(25, 7, NULL, 'применяется для защиты от воздействия высоких температур', 439, NULL),
+(25, 8, NULL, 'применяется для защиты от ударных воздействий', 439, NULL),
+(25, 4, NULL, 'применяется для защиты от агрессивных воздействий абразивных сред', 440, NULL),
+(25, 5, NULL, 'применяется для защиты от химически активных сред', 440, NULL),
+(25, 6, NULL, 'применяется для защиты от ионизирующих излучений', 440, NULL),
+(25, 7, NULL, 'применяется для защиты от воздействия высоких температур', 440, NULL),
+(25, 8, NULL, 'применяется для защиты от ударных воздействий', 440, NULL),
+(25, 4, NULL, 'применяется для защиты от агрессивных воздействий абразивных сред', 434, NULL),
+(25, 5, NULL, 'применяется для защиты от химически активных сред', 434, NULL),
+(25, 6, NULL, 'применяется для защиты от ионизирующих излучений', 434, NULL),
+(25, 7, NULL, 'применяется для защиты от воздействия высоких температур', 434, NULL),
+(25, 8, NULL, 'применяется для защиты от ударных воздействий', 434, NULL),
+(258, 1, NULL, '0.5', 441, NULL),
+(240, 23, NULL, '2.51', 441, NULL),
+(253, 1, NULL, '5', 441, NULL),
+(242, 31, NULL, '440-520', 441, NULL),
+(71, 7, NULL, '441', 441, NULL),
+(40, 0, NULL, '188', 441, NULL),
+(259, 1, NULL, '0.17', 441, NULL),
+(256, 1, NULL, '3.3-3.9', 441, NULL),
+(258, 1, NULL, '2', 442, NULL),
+(240, 23, NULL, '2.44', 442, NULL),
+(253, 1, NULL, '8', 442, NULL),
+(242, 31, NULL, '311-391', 442, NULL),
+(71, 7, NULL, '390', 442, NULL),
+(40, 0, NULL, '166', 442, NULL),
+(259, 1, NULL, '0.17', 442, NULL),
+(256, 1, NULL, '3.1-3.5', 442, NULL),
+(258, 1, NULL, '2', 443, NULL),
+(240, 23, NULL, '2.46', 443, NULL),
+(253, 1, NULL, '7', 443, NULL),
+(242, 31, NULL, '323-383', 443, NULL),
+(71, 7, NULL, '372', 443, NULL),
+(40, 0, NULL, '158', 443, NULL),
+(259, 1, NULL, '0.17', 443, NULL),
+(256, 1, NULL, '3-3.4', 443, NULL),
+(22, 0, NULL, 'метод горячего прессования', 441, NULL),
+(22, 4, NULL, 'метод горячего прессования', 441, NULL),
+(22, 4, NULL, 'метод спекания', 442, NULL),
+(22, 4, NULL, 'метод спекания', 443, NULL),
+(162, 0, NULL, 'спекание без применения внешнего давления, с использованием различных добавок для увеличения диффузионного массопереноса', 442, NULL),
+(162, 4, NULL, 'спекание без применения внешнего давления, с использованием различных добавок для увеличения диффузионного массопереноса', 443, NULL),
+(162, 4, NULL, 'спекание без применения внешнего давления, с использованием различных добавок для увеличения диффузионного массопереноса', 442, NULL),
+(25, 4, NULL, 'производство бронежилетов', 441, NULL),
+(25, 4, NULL, 'производство бронежилетов', 442, NULL),
+(25, 4, NULL, 'производство бронежилетов', 443, NULL),
+(240, 23, NULL, '14.8', 444, NULL),
+(242, 31, NULL, '2800', 444, NULL),
+(71, 0, NULL, '590', 444, NULL),
+(260, 1, NULL, '91', 444, NULL),
+(244, 2, NULL, '35', 444, NULL),
+(53, 33, NULL, '50', 444, NULL),
+(241, 4, NULL, '5,1', 444, NULL),
+(261, 1, NULL, '0,01', 444, NULL),
+(262, 1, NULL, '4', 444, NULL),
+(240, 23, NULL, '14,7', 445, NULL),
+(242, 31, NULL, '2400', 445, NULL),
+(71, 7, NULL, '590', 445, NULL),
+(260, 1, NULL, '90', 445, NULL),
+(244, 2, NULL, '30', 445, NULL),
+(53, 33, NULL, '50', 445, NULL),
+(241, 4, NULL, '5,1', 445, NULL),
+(261, 1, NULL, '0,01', 445, NULL),
+(262, 1, NULL, '3', 445, NULL),
+(240, 23, NULL, '14,6', 446, NULL),
+(242, 31, NULL, '1670', 446, NULL),
+(71, 7, NULL, '600', 446, NULL),
+(260, 1, NULL, '87,5', 446, NULL),
+(244, 2, NULL, '30', 446, NULL),
+(53, 33, NULL, '50', 446, NULL),
+(241, 4, NULL, '5,1', 446, NULL),
+(22, 4, NULL, 'метод порошковой металлургии', 444, NULL),
+(22, 4, NULL, 'метод порошковой металлургии', 446, NULL),
+(22, 4, NULL, 'метод порошковой металлургии', 445, NULL),
+(25, 4, NULL, 'применение в качестве пар трения подшипников скольжения и торцовых уплотнений, деталей запорной арматуры, штампов, пресс-форм и др', 445, NULL),
+(25, 4, NULL, 'применение в качестве пар трения подшипников скольжения и торцовых уплотнений, деталей запорной арматуры, штампов, пресс-форм и др', 444, NULL),
+(25, 4, NULL, 'применение в качестве пар трения подшипников скольжения и торцовых уплотнений, деталей запорной арматуры, штампов, пресс-форм и др', 446, NULL);
 
 -- --------------------------------------------------------
 
@@ -5580,7 +5734,7 @@ CREATE TABLE IF NOT EXISTS `nano_f_datum` (
   KEY `MATRIX_ID` (`MATRIX_ID`),
   KEY `FILL_ID` (`FILL_ID`),
   KEY `ARTICLE_ID` (`ARTICLE_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=432 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=447 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_f_datum`
@@ -6001,8 +6155,23 @@ INSERT INTO `nano_f_datum` (`DATA_ID`, `ARTICLE_ID`, `COMPOSITE_ID`, `MATRIX_ID`
 (427, 359, 70, 197, 69),
 (428, 359, 71, 196, 68),
 (429, 359, 72, 196, 68),
-(430, 359, 73, 196, 70),
-(431, 359, 74, 197, 70);
+(430, 359, 73, 196, 68),
+(431, 359, 74, 197, 69),
+(432, 360, 75, 198, 70),
+(433, 360, 76, 198, 70),
+(434, 361, 77, 199, 70),
+(435, 361, 78, 200, 70),
+(436, 362, 79, 198, 27),
+(437, 362, 80, 198, 27),
+(438, 361, 79, 198, 27),
+(439, 361, 80, 198, 27),
+(440, 361, 75, 198, 70),
+(441, 363, 81, 199, 70),
+(442, 363, 82, 199, 72),
+(443, 363, 83, 199, 72),
+(444, 364, 84, 201, 73),
+(445, 364, 85, 201, 74),
+(446, 364, 86, 201, 73);
 
 -- --------------------------------------------------------
 
@@ -6063,7 +6232,7 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (129, 1, 3, 'нм', NULL),
 (129, 2, 3, 'мкм', NULL),
 (130, 1, 3, 'не определено', NULL),
-(131, 1, 2, 'г/см3', 'g/cm3'),
+(131, 1, 2, 'г/см³', 'g/cm³'),
 (133, 1, 3, 'ГПа', 'GPa'),
 (133, 2, 3, '%, на сколько увеличился', NULL),
 (134, 1, 3, 'ГПа', 'GPa'),
@@ -6439,11 +6608,11 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (187, 2, 2, 'масс %', NULL),
 (188, 1, 3, 'не определено', NULL),
 (189, 1, 2, 'м/с', NULL),
-(240, 23, 2, 'г/см3', 'g/sm3'),
+(240, 23, 2, 'г/см³', 'g/sm³'),
 (204, 24, 2, '°C', '°C'),
 (53, 25, 2, 'Вт/(K*м); при 100°C; при 400°C; при 1000°C', 'W/(K*m); at 100°C; at 400°C; at 1000°C'),
 (87, 26, 2, 'Ом*см; при 100°C; при 1300°C)', 'Ohm*cm; at 100°C; at 1300°C'),
-(241, 27, 2, 'α•10⁶ K⁻⁶ (20-1400°C)', 'α•10⁶ K⁻⁶ (20-1400°C)'),
+(241, 27, 2, 'α•10⁻⁶•K⁻¹, при 20-1400°C', 'α•10⁻⁶•K⁻¹, at 20-1400°C'),
 (71, 28, 2, 'ГПа; при 20°C; при 1000°C; при 1500°C', 'GPa; at 20°C; at 1000°C; 1500°C'),
 (242, 29, 2, 'МПА; 20°C; 1500°C', 'MPa; 20°C; 1500°C'),
 (243, 30, 2, 'ГПа (при 20°C)', 'GPa (at 20°C)'),
@@ -6454,7 +6623,7 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (85, 34, 2, 'при 25°C и частоте 10⁶ Гц', 'at 25°C and frequency 10⁶ Hz'),
 (86, 8, 2, 'tgδ•10⁴, при 25°C и частоте 10⁶ Гц', 'tgδ•10⁴, at 25°C and frecuency 10⁶ Hz'),
 (87, 36, 2, ', Ом•см, при 100°С', 'Ohm•cm, at 100°С'),
-(241, 37, 2, 'α•10⁶ при 20-900°C, K⁻¹', 'α•10⁶ at 20-900°C, K⁻¹'),
+(241, 37, 2, 'α•10⁻⁶•K⁻¹, при 20-900°C', 'α•10⁻⁶•K⁻¹, at 20-900°C'),
 (244, 1, 2, 'кПа•м²', 'kPa•m²'),
 (53, 3, 2, 'Вт/(К•м)', 'W/(K•m)'),
 (88, 7, 2, 'кВ/мм', 'kV/mm'),
@@ -6462,9 +6631,9 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (85, 35, 2, 'при 25°C и частоте 10¹⁰ Гц', 'at 25°C and frequency 10¹⁰ Hz'),
 (245, 1, 6, '%', '%'),
 (123, 3, 6, '%', '%'),
-(241, 1, 2, 'α•10⁶ при 20-200°C, K⁻¹', 'α•10⁶ at 20-200°C, K⁻¹'),
-(241, 2, 2, 'α•10⁶ при 20-500°C, K⁻¹', 'α•10⁶ at 20-500°C, K⁻¹'),
-(241, 3, 2, 'α•10⁶ при 20-1000°C, K⁻¹', 'α•10⁶ at 20-1000°C, K⁻¹'),
+(241, 1, 2, 'α•10⁻⁶•K⁻¹, при 20-200°C ', 'α•10⁻⁶•K⁻¹ at 20-200°C, K⁻¹'),
+(241, 2, 2, 'α•10⁻⁶•K⁻¹, при 20-500°C', 'α•10⁻⁶•K⁻¹, at 20-500°C'),
+(241, 3, 2, 'α•10⁻⁶•K⁻¹, при 20-1000°C', 'α•10⁻⁶•K⁻¹, at 20-1000°C'),
 (25, 4, 3, 'название', 'name'),
 (25, 5, 3, 'название', 'name'),
 (25, 6, 3, 'название', 'name'),
@@ -6483,7 +6652,20 @@ INSERT INTO `nano_l_answers` (`QUESTION_ID`, `ANSWER_ID`, `ANSWER_TYPE_ID`, `ANS
 (254, 1, 2, 'мкм', 'μm'),
 (22, 4, 3, 'Название метода', 'Method name'),
 (159, 4, 3, 'Диапазон температур', 'Temperature range'),
-(162, 4, 3, 'Краткое описание', 'Short description');
+(162, 4, 3, 'Краткое описание', 'Short description'),
+(255, 1, 2, 'мкм', 'μm'),
+(256, 1, 2, 'МПа•м½', 'MPa•m½'),
+(241, 4, 2, 'α•10⁻⁶•K⁻¹', 'α•10⁻⁶•K⁻¹,'),
+(257, 1, 6, 'ГПа', 'GPa'),
+(25, 10, 3, 'название', 'name'),
+(25, 11, 3, 'название', 'name'),
+(25, 12, 3, 'название', 'name'),
+(258, 1, 2, '%', '%'),
+(259, 1, 2, 'без размерности', 'without measure'),
+(260, 1, 2, 'ГПа', 'GPa'),
+(244, 2, 2, 'кДж/м²', 'kJ/m²'),
+(261, 1, 2, 'без размерности', 'without measure'),
+(262, 1, 2, 'без размерности', 'without measure');
 
 -- --------------------------------------------------------
 
@@ -6533,7 +6715,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_articles` (
   `FILE` text NOT NULL,
   PRIMARY KEY (`ARTICLE_ID`),
   KEY `COUNTRY_ID` (`COUNTRY_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=360 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=365 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_articles`
@@ -6883,8 +7065,13 @@ INSERT INTO `nano_l_articles` (`ARTICLE_ID`, `ARTICLE_NAME`, `YEAR_ID`, `JOURNAL
 (355, '4.2.1. Керамика на основе Al2O3', 2004, 'Техническая керамика. Учебное пособие ТПУ Томск.', NULL, 1, '30-36', '6', NULL, 'С.В.Матренин, А.И.Слосман', 7, 'mechanical_engineering.pdf'),
 (356, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники', 2016, 'Разработка бесспековой технологии вакуумплотной корундовой керамики группы вк100 для нужд электронной техники: дисс., Москва', NULL, 1, '', '', NULL, 'Амелина О.Д.', 7, ''),
 (357, 'Вакуум-плотная корундовая керамика на основе ультрадисперсных порошков', 2010, 'НАНОИНДУСТРИЯ', NULL, 1, '40-41', '2', 5, 'Амелина O.Д., Нестеров C.', 7, 'article_1812_291.pdf'),
-(358, '[Электронный ресурс] / Материал URL: http://www.vaccer.ru/material', 2006, 'OOO «Вакуумная керамика»', NULL, 1, '', '1', NULL, 'OOO «Вакуумная керамика»', 7, ''),
-(359, 'Fracture toughness of alumina–zirconia composites', 2006, 'Ceramics International', NULL, 29, '249-255', '7', 32, 'Cesari F., Esposito L., Furgiuele F.M., MAletta C., Tucci A.', 7, 'cesari2006.pdf');
+(358, 'Материал, вакуумная керамика', 2006, '«Вакуумная керамика» [Электронный ресурс], режим доступа: http://www.vaccer.ru/material', NULL, 1, '1', '1', NULL, 'OOO «Вакуумная керамика»', 7, 'http://www.vaccer.ru/material'),
+(359, 'Fracture toughness of alumina–zirconia composites', 2006, 'Ceramics International', NULL, 29, '249-255', '7', 32, 'Cesari F., Esposito L., Furgiuele F.M., MAletta C., Tucci A.', 7, 'cesari2006.pdf'),
+(360, 'Карбиды кремния спеченный в твердой фазе и жидкофазноспеченный карбид кремния', 2013, 'ВИРИАЛ [Электронный ресурс], режим доступа: http://www.virial.ru/materials/91/', NULL, 1, '1', '1', NULL, 'ООО «Вириал»', 7, 'http://www.virial.ru/materials/91/'),
+(361, 'Износостойкая керамика', 2013, 'ВИРИАЛ [Электронный ресурс], режим доступа: http://www.virial.ru/materials/arm_ceramic/		', NULL, 1, '1', '1', NULL, 'ООО «Вириал»', 7, 'http://www.virial.ru/materials/arm_ceramic/'),
+(362, 'Карбид кремния реакционноспеченный', 2013, 'ВИРИАЛ [Электронный ресурс], режим доступа: http://www.virial.ru/materials/473/', NULL, 1, '1', '1', NULL, 'ООО «Вириал»', 7, 'http://www.virial.ru/materials/473/'),
+(363, 'Boron Carbide—A Comprehensive Review', 1990, 'Journal of the European Ceramic Society ', 4, 4, '205-225', '20', 6, 'F. Thevenot', 7, 'thvenot1990'),
+(364, 'Вольфрамсодержащие твёрдые сплавы', 2013, 'ВИРИАЛ [Электронный ресурс], режим доступа: http://www.virial.ru/materials/92/', NULL, 1, '1', '1', NULL, 'ООО «Вириал»', 7, 'http://www.virial.ru/materials/92/');
 
 -- --------------------------------------------------------
 
@@ -6901,7 +7088,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_composite` (
   `fill_fraction` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `un_name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_composite`
@@ -6980,7 +7167,19 @@ INSERT INTO `nano_l_composite` (`id`, `name`, `full_name`, `matrix_fraction`, `f
 (71, 'TZ3Y60A', '4Z6A', '60', '40'),
 (72, 'TZ3Y80A', '2Z8A', '80', '20'),
 (73, 'SM8', 'Baikowski, F', '100', '0'),
-(74, 'TZ3YS', 'TZ3YS—Tosoh Co., J, 3 mol% Y2O3', '100', '0');
+(74, 'TZ3YS', 'TZ3YS—Tosoh Co., J, 3 mol% Y2O3', '100', '0'),
+(75, 'S-P SiC', 'Solid-Phase sintered silicon carbide', '', ''),
+(76, 'L-P SiC', 'liquid-phase sintered silicon carbide', '', ''),
+(77, 'Based on B₄C', 'Ceramic composite based on boron carbide', '', ''),
+(78, 'Based on TiB₂', 'Ceramic composite based on titanium diboride', '', ''),
+(79, 'R SiC (15%Si)', 'reactive-sintered silicon carbide', '85', '15'),
+(80, 'R SiC (21%Si)', 'reactive-sintered silicon carbide (for large-sized products)', '79', '21'),
+(81, 'H-P B₄C ', 'boron carbide hot-pressed', '', ''),
+(82, 'S B₄C (1%мас. C)', 'Спечённый карбид бора (1% мас. свободного углерода)', '99', '1'),
+(83, 'S B₄C (3%мас. C)', 'Спечённый карбид бора (3% мас. свободного углерода)', '97', '3'),
+(84, 'ВК8', 'вольфрам-кобальт 8%масс.', '92', '8'),
+(85, 'CBH8', 'смесь вольфрама и никеля 8%масс.', '92', '8'),
+(86, 'ВК8 (ГОСТ-3882)', 'вольфрам-кобальт 8%масс. (ГОСТ-3882)', '92', '8');
 
 -- --------------------------------------------------------
 
@@ -6997,7 +7196,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_fill` (
   `FILL_DESC_ENG` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`FILL_ID`),
   KEY `FILL_CATEGORY` (`FILL_CATEGORY`)
-) ENGINE=MyISAM AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_fill`
@@ -7069,11 +7268,15 @@ INSERT INTO `nano_l_fill` (`FILL_ID`, `FILL_CATEGORY`, `FILL_NAME`, `FILL_DESC`,
 (63, 0, 'multiphase systems', '', ''),
 (64, 6, 'VS2', '', ''),
 (65, 2, 'NiO', '', ''),
-(66, 2, 'TiO₂', 'оксид титана', 'Titan oxide'),
+(66, 2, 'TiO2', 'оксид титана', 'Titan oxide'),
 (67, 2, 'MgO', 'оксид магния', 'MgO'),
-(68, 2, 'ZrO2', 'Оксид циркония', 'Zinc oxide'),
+(68, 2, 'ZrO2', 'Оксид циркония', 'Zirconia oxide'),
 (69, 2, 'Al2O3', 'Оксид алюминия', 'Aluminum oxide'),
-(70, 14, 'нет наполнителя', 'без наполнителя', 'without fill');
+(70, 14, '-', '-', '-'),
+(71, 8, 'Si', 'несвязанный кремний', 'non-bonded silicon'),
+(72, 8, 'C', 'углерод', 'carbon'),
+(73, 1, 'Co', 'Кобальт', 'Cobalt'),
+(74, 1, 'Ni', 'никель', 'Nickel');
 
 -- --------------------------------------------------------
 
@@ -7090,7 +7293,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_matrix` (
   `MATRIX_NAME_DESC` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`MATRIX_ID`),
   KEY `MATRIX_CATEGORY` (`MATRIX_CATEGORY`)
-) ENGINE=MyISAM AUTO_INCREMENT=198 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_matrix`
@@ -7261,7 +7464,11 @@ INSERT INTO `nano_l_matrix` (`MATRIX_ID`, `MATRIX_CATEGORY`, `MATRIX_NAME`, `MAT
 (194, 2, 'Ta2O5', '', NULL),
 (195, 11, 'PEL', 'Polyethylene-layered', NULL),
 (196, 12, 'Al2O3', 'Al₂O₃', NULL),
-(197, 12, 'ZrO2', 'Оксид циркония', 'Zinc oxide');
+(197, 12, 'ZrO2', 'Zirconia oxide', ''),
+(198, 12, 'SiC', 'Silicon carbide', 'NULL'),
+(199, 12, 'B4C', 'Boron carbide', 'NULL'),
+(200, 12, 'TiB2', 'Titanium diboride', 'NULL'),
+(201, 12, 'WC', 'wolfram carbide', 'NULL');
 
 -- --------------------------------------------------------
 
@@ -7427,7 +7634,7 @@ CREATE TABLE IF NOT EXISTS `nano_l_questions` (
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`QUESTION_ID`),
   KEY `QUESTION_GROUP_ID` (`QUESTION_GROUP_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=255 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=263 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `nano_l_questions`
@@ -7654,7 +7861,15 @@ INSERT INTO `nano_l_questions` (`QUESTION_ID`, `QUESTION_GROUP_ID`, `QUESTION_NA
 (251, 10, 'Твердость по Виккерсу', 'Vickers hardness', '', 1),
 (252, 10, 'критический коэффициент интенсивности напряжений I моды деформаций', 'the critical stress intensity factor I of the deformation mode', '', 1),
 (253, 10, 'Средний размер зерна матрицы', 'Average grain size of matrix', '', 1),
-(254, 10, 'Средний размер зерна наполнителя', 'Average grain size of fill', '', 1);
+(254, 10, 'Средний размер зерна наполнителя', 'Average grain size of fill', '', 1),
+(255, 1, 'микроструктура (репер)', 'microstructure', '', 1),
+(256, 10, 'трещиностойкость', 'crack resistance', '', 1),
+(257, 10, 'Микротвердость зёрен SiC', 'Microhardness of SiC grain', '', 1),
+(258, 10, 'Пористость (%)', 'Porosity', '', 1),
+(259, 10, 'коэффициент Пуассона', 'ratio of Poisson', '', 1),
+(260, 10, 'Твёрдость по Роквеллу', 'Rockwell hardness', '', 1),
+(261, 10, 'Коэффициент трения в воде', 'constant of friction in water', '', 1),
+(262, 10, 'балл коррозионной стойкости в морской воде', 'corrosion resistance in sea water', '', 1);
 
 -- --------------------------------------------------------
 
@@ -7726,28 +7941,12 @@ INSERT INTO `nano_l_tabulators` (`TABULATOR_ID`, `TABULATOR_NAME`) VALUES
 --
 DROP VIEW IF EXISTS `properties_view`;
 CREATE TABLE IF NOT EXISTS `properties_view` (
-`name` varchar(255)
-,`MATRIX_NAME` varchar(255)
-,`FILL_NAME` varchar(255)
-,`QUESTION_NAME` varchar(255)
-,`ANSWER_TEXT` text
-,`ANSWER_NAME` text
-);
-
--- --------------------------------------------------------
-
---
--- Дублирующая структура для представления `properties_view_old`
--- (See below for the actual view)
---
-DROP VIEW IF EXISTS `properties_view_old`;
-CREATE TABLE IF NOT EXISTS `properties_view_old` (
-`name` varchar(255)
-,`MATRIX_NAME` varchar(255)
-,`FILL_NAME` varchar(255)
-,`QUESTION_NAME` varchar(255)
-,`ANSWER_TEXT` text
-,`ANSWER_NAME` text
+`КОМПОЗИТ` varchar(255)
+,`МАТРИЦА` varchar(255)
+,`НАПОЛНИТЕЛЬ` varchar(255)
+,`СВОЙСТВО` varchar(255)
+,`ЗНАЧЕНИЕ` text
+,`ЕДИНИЦЫ ИЗМЕРЕНИЯ` text
 );
 
 -- --------------------------------------------------------
@@ -7758,9 +7957,11 @@ CREATE TABLE IF NOT EXISTS `properties_view_old` (
 --
 DROP VIEW IF EXISTS `synthesis_description`;
 CREATE TABLE IF NOT EXISTS `synthesis_description` (
-`name` varchar(255)
-,`QUESTION_NAME` varchar(255)
-,`ANSWER_TEXT` text
+`КОМПОЗИТ` varchar(255)
+,`МАТРИЦА` varchar(255)
+,`НАПОЛНИТЕЛЬ` varchar(255)
+,`ВОПРОС` varchar(255)
+,`ОТВЕТ` text
 );
 
 -- --------------------------------------------------------
@@ -7799,7 +8000,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`) VALUES
-(2, 'alexey', 'alexey');
+(2, 'alexey', 'alexey'),
+(1, 'alexey', 'a4a23c4141b4b238a02ec479603fef08');
 
 -- --------------------------------------------------------
 
@@ -7808,7 +8010,7 @@ INSERT INTO `users` (`id`, `login`, `password`) VALUES
 --
 DROP TABLE IF EXISTS `application_area`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `application_area`  AS  select `nlc`.`name` AS `name`,`nlq`.`QUESTION_NAME` AS `QUESTION_NAME`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT` from ((((((`nano_l_questions` `nlq` join `nano_l_answers` `nla`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) join `nano_l_composite` `nlc`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`cm`.`id` = `nlm`.`MATRIX_CATEGORY`) and (`cm`.`name` = 'Керамика') and (`nfd`.`DATA_ID` <> 367) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nlq`.`QUESTION_GROUP_ID` = 4)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `application_area`  AS  select `nlc`.`name` AS `КОМПОЗИТ`,`nlm`.`MATRIX_NAME` AS `МАТРИЦА`,`nlf`.`FILL_NAME` AS `НАПОЛНИТЕЛЬ`,`nfa`.`ANSWER_TEXT` AS `ОБЛАСТЬ ПРИМЕНЕНИЯ` from (((((((`nano_l_questions` `nlq` join `nano_l_answers` `nla`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) join `nano_l_composite` `nlc`) join `nano_l_fill` `nlf`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nfd`.`FILL_ID` = `nlf`.`FILL_ID`) and (`cm`.`id` = `nlm`.`MATRIX_CATEGORY`) and (`cm`.`name` = 'Керамика') and (`nfd`.`DATA_ID` <> 367) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nlq`.`QUESTION_GROUP_ID` = 4)) ;
 
 -- --------------------------------------------------------
 
@@ -7817,7 +8019,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `articles`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `articles`  AS  select `nlc`.`name` AS `name`,`nla`.`ARTICLE_NAME` AS `ARTICLE_NAME`,`nla`.`YEAR_ID` AS `YEAR_ID`,`nla`.`JOURNAL_NAME` AS `JOURNAL_NAME`,`nla`.`PAGES` AS `PAGES`,`nla`.`AUTHORS` AS `AUTHORS`,`nc`.`COUNTRY_NAME` AS `COUNTRY_NAME`,`nla`.`FILE` AS `FILE` from (((((`nano_f_datum` `nfd` join `nano_l_articles` `nla`) join `nano_l_composite` `nlc`) join `nano_countries` `nc`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) where ((`nla`.`ARTICLE_ID` = `nfd`.`ARTICLE_ID`) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nc`.`COUNTRY_ID` = `nla`.`COUNTRY_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`nfd`.`DATA_ID` <> 367) and (`cm`.`name` = 'Керамика')) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `articles`  AS  select `nlc`.`name` AS `КОМПОЗИТ`,`nla`.`ARTICLE_NAME` AS `СТАТЬЯ`,`nla`.`YEAR_ID` AS `ГОД ИЗДАНИЯ`,`nla`.`JOURNAL_NAME` AS `ЖУРНАЛ`,`nla`.`PAGES` AS `СТРАНИЦЫ`,`nla`.`AUTHORS` AS `АВТОРЫ`,`nc`.`COUNTRY_NAME` AS `СТРАНА`,`nla`.`FILE` AS `ИСТОЧНИК` from (((((`nano_f_datum` `nfd` join `nano_l_articles` `nla`) join `nano_l_composite` `nlc`) join `nano_countries` `nc`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) where ((`nla`.`ARTICLE_ID` = `nfd`.`ARTICLE_ID`) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nc`.`COUNTRY_ID` = `nla`.`COUNTRY_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`nfd`.`DATA_ID` <> 367) and (`cm`.`name` = 'Керамика')) ;
 
 -- --------------------------------------------------------
 
@@ -7835,16 +8037,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `properties_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `properties_view`  AS  select `nlc`.`name` AS `name`,`nlm`.`MATRIX_NAME` AS `MATRIX_NAME`,`nlf`.`FILL_NAME` AS `FILL_NAME`,`nlq`.`QUESTION_NAME` AS `QUESTION_NAME`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT`,`nla`.`ANSWER_NAME` AS `ANSWER_NAME` from (((((((`nano_l_answers` `nla` join `nano_l_questions` `nlq`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `nano_l_fill` `nlf`) join `nano_l_composite` `nlc`) join `category_matrix` `cm`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nlm`.`MATRIX_ID` = `nfd`.`MATRIX_ID`) and (`nlf`.`FILL_ID` = `nfd`.`FILL_ID`) and (`nfd`.`DATA_ID` <> 367) and (`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`cm`.`name` = 'Керамика')) ;
-
--- --------------------------------------------------------
-
---
--- Структура для представления `properties_view_old`
---
-DROP TABLE IF EXISTS `properties_view_old`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `properties_view_old`  AS  select `nlc`.`name` AS `name`,`nlm`.`MATRIX_NAME` AS `MATRIX_NAME`,`nlf`.`FILL_NAME` AS `FILL_NAME`,`nlq`.`QUESTION_NAME` AS `QUESTION_NAME`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT`,`nla`.`ANSWER_NAME` AS `ANSWER_NAME` from ((((((`nano_l_answers` `nla` join `nano_l_questions` `nlq`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `nano_l_fill` `nlf`) join `nano_l_composite` `nlc`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nlm`.`MATRIX_ID` = `nfd`.`MATRIX_ID`) and (`nlf`.`FILL_ID` = `nfd`.`FILL_ID`) and (`nfd`.`DATA_ID` = 367)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `properties_view`  AS  select `nlc`.`name` AS `КОМПОЗИТ`,`nlm`.`MATRIX_NAME` AS `МАТРИЦА`,`nlf`.`FILL_NAME` AS `НАПОЛНИТЕЛЬ`,`nlq`.`QUESTION_NAME` AS `СВОЙСТВО`,`nfa`.`ANSWER_TEXT` AS `ЗНАЧЕНИЕ`,`nla`.`ANSWER_NAME` AS `ЕДИНИЦЫ ИЗМЕРЕНИЯ` from (((((((`nano_l_answers` `nla` join `nano_l_questions` `nlq`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `nano_l_fill` `nlf`) join `nano_l_composite` `nlc`) join `category_matrix` `cm`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and (`nlm`.`MATRIX_ID` = `nfd`.`MATRIX_ID`) and (`nlf`.`FILL_ID` = `nfd`.`FILL_ID`) and (`nfd`.`DATA_ID` <> 367) and (`nlm`.`MATRIX_CATEGORY` = `cm`.`id`) and (`cm`.`name` = 'Керамика') and (`nlq`.`QUESTION_GROUP_ID` <> 3) and (`nlq`.`QUESTION_GROUP_ID` <> 4) and (`nlq`.`QUESTION_GROUP_ID` <> 15)) ;
 
 -- --------------------------------------------------------
 
@@ -7853,7 +8046,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `synthesis_description`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `synthesis_description`  AS  select `nlc`.`name` AS `name`,`nlq`.`QUESTION_NAME` AS `QUESTION_NAME`,`nfa`.`ANSWER_TEXT` AS `ANSWER_TEXT` from ((((((`nano_l_questions` `nlq` join `nano_l_answers` `nla`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) join `nano_l_composite` `nlc`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`cm`.`id` = `nlm`.`MATRIX_CATEGORY`) and (`cm`.`name` = 'Керамика') and (`nfd`.`DATA_ID` <> 367) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and ((`nlq`.`QUESTION_GROUP_ID` = 3) or (`nlq`.`QUESTION_GROUP_ID` = 15))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `synthesis_description`  AS  select `nlc`.`name` AS `КОМПОЗИТ`,`nlm`.`MATRIX_NAME` AS `МАТРИЦА`,`nlf`.`FILL_NAME` AS `НАПОЛНИТЕЛЬ`,`nlq`.`QUESTION_NAME` AS `ВОПРОС`,`nfa`.`ANSWER_TEXT` AS `ОТВЕТ` from (((((((`nano_l_questions` `nlq` join `nano_l_answers` `nla`) join `nano_f_answers` `nfa`) join `nano_f_datum` `nfd`) join `nano_l_matrix` `nlm`) join `category_matrix` `cm`) join `nano_l_composite` `nlc`) join `nano_l_fill` `nlf`) where ((`nlq`.`QUESTION_ID` = `nla`.`QUESTION_ID`) and (`nla`.`ANSWER_ID` = `nfa`.`ANSWER_ID`) and (`nla`.`QUESTION_ID` = `nfa`.`QUESTION_ID`) and (`nfa`.`DATA_ID` = `nfd`.`DATA_ID`) and (`nfd`.`MATRIX_ID` = `nlm`.`MATRIX_ID`) and (`nfd`.`FILL_ID` = `nlf`.`FILL_ID`) and (`cm`.`id` = `nlm`.`MATRIX_CATEGORY`) and (`cm`.`name` = 'Керамика') and (`nfd`.`DATA_ID` <> 367) and (`nlc`.`id` = `nfd`.`COMPOSITE_ID`) and ((`nlq`.`QUESTION_GROUP_ID` = 3) or (`nlq`.`QUESTION_GROUP_ID` = 15))) ;
 
 -- --------------------------------------------------------
 
